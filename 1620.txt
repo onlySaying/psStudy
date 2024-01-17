@@ -1,0 +1,40 @@
+#include<map>
+#include<iostream>
+#include<string>
+#include<unordered_map>
+#include<vector>
+using namespace std;
+
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+	unordered_map<string, int> um;
+	int n;
+	int m;
+	cin >> n >> m;
+	string poket;
+	vector<string> v;
+	
+	for (int i = 0; i < n; i++)
+	{
+		cin >> poket;
+		v.push_back(poket);
+		um.insert({ poket, i });
+	}
+	string cm;
+	for (int i = 0; i < m; i++)
+	{
+		cin >> cm;
+		if (isdigit(cm[0]))
+		{
+			int temp = stoi(cm);
+			cout << v[temp-1] << '\n';
+		}
+		else
+		{
+			cout << um[cm]+1 << '\n';
+		}
+	}
+}

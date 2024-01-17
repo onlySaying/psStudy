@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cctype>
+using namespace std;
+
+int tile[1001];
+int main() 
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	string str;
+	cin >> str;
+	int num = 0;
+	bool min = false;
+	int total = 0;
+	for (int i = 0; i < str.length(); i++)
+	{
+		if (isdigit(str[i]))
+		{
+			num *= 10;
+			num += str[i] - '0';
+			continue;
+		}
+		if (!min)
+		{
+			
+			total += num;
+			num = 0;
+			if(str[i] == '-')
+			{
+				min = true;
+			}
+		}
+		else
+		{
+			total -= num;
+			num = 0;
+		}
+		
+	}
+	if (min)
+	{
+		total -= num;
+	}
+	else
+	{
+		total += num;
+	}
+	
+	cout << total;
+	return 0;
+}

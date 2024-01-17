@@ -1,0 +1,39 @@
+#include<iostream>
+#include<string>
+#include<unordered_map>
+#include<vector>
+#include<tuple>
+#include<algorithm>
+
+using namespace std;
+
+unordered_map<long long, long long> group;
+
+long long DFS(long long n, long long p, long long q)
+{
+	if (group.find(n) != group.end())
+	{
+		return group[n];
+	}
+	long long answer = 0;
+	answer = DFS(n/p, p ,q) + DFS(n/q, p ,q);
+	
+	group.insert({n, answer});
+	return answer;
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	long long n, p, q;
+	cin >> n >> p >> q;
+	
+	group.insert({ 0, 1 });
+	long long answer = 
+	DFS(n, p, q);
+
+	cout << answer;
+}

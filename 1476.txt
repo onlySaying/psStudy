@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int gcd(int p, int q)
+{
+	if (q == 0) { return p; }
+	return gcd(q, p % q);
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int a, b, c;
+	cin >> a >> b>> c;
+	
+	int max = 15/gcd(15, 28) *28;
+	max = max / gcd(max, 19) * 19;
+
+	int dE = a;
+	int dS = b;
+	int dM = c;
+
+	while (dE <= max || dS <= max || dM <= max)
+	{
+		if (dE == dS)
+		{
+			if (dS == dM) { cout << dE; }
+		}
+
+		int ans = min(dE, min(dS, dM));
+
+		if (dE == ans)
+		{
+			dE += 15;
+		}
+		if (dS == ans)
+		{
+			dS += 28;
+		}
+		if (dM == ans)
+		{
+			dM += 19;
+		}
+		
+	}
+
+	return 0;
+}

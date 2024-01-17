@@ -1,0 +1,72 @@
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+const int Capacity = 10001;
+vector<int> map[Capacity];
+bool visited[Capacity];
+
+vector<pair<int, int>> v; //<컴퓨터 번호, 해킹 가능한 컴퓨터 수> 벡터
+int hacked = 1; //해킹 가능한 컴퓨터 수
+
+int cnt[Capacity];
+
+void BFS(int v) {
+    queue<int> q;
+    visited[v] = true;
+    q.push(v);
+    int cur = v;
+
+    while (!q.empty()) {
+        v = q.front();
+        q.pop();
+
+        for (int w = 0; w < map[v].size(); w++) {
+            int nv = map[v][w];
+
+            if (visited[nv] == 0) {
+                visited[nv] = true;
+                q.push(nv);
+                cnt[cur]++;
+            }
+        }
+    }
+}
+
+void resetVisit(int n) {
+    for (int i = 0; i <= n; i++) {
+        visited[i] = 0;
+    }
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        cin >> a >> b;
+        map[b].push_back(a);
+    }
+
+    for (int i = 1; i <= n; i++) {
+        BFS(i);
+        resetVisit(n);
+    }
+
+    int maxCnt = -1;
+    for (int i = 1; i <= n; i++)
+    {
+        maxCnt = max(maxCnt, cnt[i]);
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        if (maxCnt == cnt[i])
+        {
+            cout << i << " ";
+        }
+    }
+
+}
