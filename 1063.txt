@@ -1,0 +1,145 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<string>
+
+using namespace std;
+
+int main()
+{
+	string king, stone;
+	cin >> king >> stone;
+	char kingC = king[0];
+	int kingN = king[1] - '0';
+	char stoneC = stone[0];
+	int stoneN = stone[1] - '0';
+	int n;
+	cin >> n;
+	vector<string> v;
+	for (int i = 0; i < n; i++)
+	{
+		string temp;
+		cin >> temp;
+		v.push_back(temp);
+	}
+	char kingMC;
+	int kingMN;
+	for (int i = 0; i < n; i++)
+	{
+		kingMC = kingC;
+		kingMN = kingN;
+		if (v[i] == "R")
+		{
+			if (kingC == 'H'){continue;}
+			kingMC++;
+		}
+		if (v[i] == "L")
+		{
+			if (kingC == 'A') { continue; }
+			kingMC--;
+		}
+		// 한칸 아래로
+		if (v[i] == "B")
+		{
+			if (kingN == 1) { continue; }
+			kingMN--;
+		}
+		// 한칸 위로
+		if (v[i] == "T")
+		{
+			if (kingN == 8) { continue; }
+			kingMN++;
+		}
+		//RT: 오른쪽 위 대각선으로
+		if (v[i] == "RT")
+		{
+			if (kingC == 'H') { continue; }
+			if (kingN == 8) { continue; }
+			kingMC++;
+			kingMN++;
+		}
+		//LT : 왼쪽 위 대각선으로
+		if (v[i] == "LT")
+		{
+			if (kingN == 8) { continue; }
+			if (kingC == 'A') { continue; }
+			kingMC--;
+			kingMN++;
+		}
+		//RB : 오른쪽 아래 대각선으로
+		if (v[i] == "RB")
+		{
+			if (kingC == 'H') { continue; }
+			if (kingN == 1) { continue; }
+			kingMC++;
+			kingMN--;
+		}
+		//LB : 왼쪽 아래 대각선으로
+		if (v[i] == "LB")
+		{
+			if (kingC == 'A') { continue; }
+			if (kingN == 1) { continue; }
+			kingMC--;
+			kingMN--;
+		}
+
+		if (kingMC == stoneC && kingMN == stoneN)
+		{
+			if (v[i] == "R")
+			{
+				if (stoneC == 'H'){continue;}
+				stoneC++;
+			}
+			if (v[i] == "L")
+			{
+				if (stoneC == 'A'){continue;}
+				stoneC--;
+			}
+			if (v[i] == "B")
+			{
+				if (stoneN == 1) { continue; }
+				stoneN--;
+			}
+			if (v[i] == "T")
+			{
+				if (stoneN == 8) { continue; }
+				stoneN++;
+			}
+			if (v[i] == "RT")
+			{
+				if (stoneC == 'H') { continue; }
+				if (stoneN == 8) { continue; }
+				stoneN++;
+				stoneC++;
+			}
+			if (v[i] == "LT")
+			{
+				if (stoneN == 8) { continue; }
+				if (stoneC == 'A') { continue; }
+				stoneC--;
+				stoneN++;
+			}
+			if (v[i] == "RB")
+			{
+				if (stoneC == 'H') { continue; }
+				if (stoneN == 1) { continue; }
+				stoneC++;
+				stoneN--;
+			}
+			if (v[i] == "LB")
+			{
+				if (stoneC == 'A') { continue; }
+				if (stoneN == 1) { continue; }
+				stoneC--;
+				stoneN--;
+			}
+		}
+
+
+		kingC = kingMC;
+		kingN = kingMN;
+	}
+
+	cout << kingC << kingN <<"\n";
+	cout << stoneC << stoneN;
+}

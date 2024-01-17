@@ -1,0 +1,41 @@
+#include<iostream>
+
+using namespace std;
+
+bool decimal[1001];
+
+int main()
+{
+	int n;
+	cin >> n;
+
+	int total = 1;
+	int idx = 1;
+	int order = n;
+	while (total < n)
+	{
+		order -= idx;
+		idx++;
+		total += idx;
+		if (total > n) { break; }
+		
+	}
+
+	int x, y;
+	x = idx;
+	y = 1;
+	for (int i = 0; i < order-1; i++)
+	{
+		x--;
+		y++;
+	}
+	if (idx % 2 == 0)
+	{
+		cout << y << "/" << x;
+	}
+	else
+	{
+		cout << x << "/" << y;
+	}
+	
+}

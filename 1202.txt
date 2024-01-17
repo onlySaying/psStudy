@@ -1,0 +1,57 @@
+#include<iostream>
+#include<vector>
+#include <set>
+#include<algorithm>
+using namespace std;
+
+bool cmp(pair<int, int> a, pair<int, int> b)
+{
+	return a.second < b.second;
+}
+
+int main(void)
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int n, k;
+	cin >> n >> k;
+	vector<pair<int, int>> jewel;
+	for (int i = 0; i < n; i++)
+	{
+		int w; int v;
+		cin >> w >> v;
+		jewel.push_back({ w, v });
+	}
+	sort(jewel.begin(), jewel.end(),cmp);
+	multiset<int> backpack;
+	for (int i = 0; i < k; i++)
+	{
+		int c;
+		cin >> c;
+		backpack.insert(c);
+	}
+
+	long long ans = 0;
+
+	for (int i = n - 1; i >= 0; i--)
+	{
+		int w, v;
+		w = jewel[i].first;
+		v = jewel[i].second;
+		auto it = backpack.lower_bound(w);
+		if (it == backpack.end()) continue;
+		ans += v;
+		/*if (*it - w != 0)
+		{
+			backpack.insert((*it)-w);
+		}*/
+		backpack.erase(it);
+	}
+	
+	cout << ans;
+
+	return 0;
+}
+​

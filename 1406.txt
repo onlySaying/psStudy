@@ -1,0 +1,54 @@
+#include <iostream>
+#include <string>
+#include <list>
+
+using namespace std;
+
+
+int main()
+{
+	string word;
+	cin >> word;
+	int n;
+	cin >> n;
+	list<char> l(word.begin(), word.end());
+	auto idx = l.end();
+	for (int i = 0; i < n; i++)
+	{
+		char temp;
+		cin >> temp;
+		if (temp == 'L')
+		{
+			if(idx != l.begin())
+			{
+				idx--;
+			}
+		}
+		else if (temp == 'D')
+		{
+			if (idx != l.end())
+			{
+				idx++;
+			}
+		}
+		else if (temp == 'B')
+		{
+			if (idx != l.begin())
+			{
+				idx = l.erase(--idx);
+			}
+		}
+		else if (temp == 'P')
+		{
+			char c;
+			cin >> c;
+			l.insert(idx, c);
+		}
+		
+	}
+	list<char>::iterator it;
+	for (it = l.begin(); it != l.end(); it++)
+	{
+		cout << *it;
+	}
+}

@@ -1,0 +1,44 @@
+#include<iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+typedef long long ll;
+
+const static int Max = 10000001;
+bool isPrime[Max];
+vector<int> primeVec;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	long long a, b;
+	cin >> a >> b;
+
+	for (int i = 2; i <= Max; i++)
+	{
+		if (isPrime[i]){continue;}
+		primeVec.push_back(i);
+		for (int j = 1; j*i <= Max; j++)
+		{
+			isPrime[i * j] = true;
+		}
+	}
+
+	ll answer = 0;
+
+	for (ll it : primeVec)
+	{
+		ll temp = it;
+		while (temp <= b/it)
+		{
+			if (temp*it >= a) { answer++; }
+			temp *= it;
+		}
+		
+	}
+	cout << answer;
+}

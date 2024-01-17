@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+#include <tuple>
+using namespace std;
+
+int main (void)
+{
+	int n;
+	cin >> n;
+	vector<long long> v(n);
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> v[i];
+	}
+	sort(v.begin(), v.end());
+	
+	int answer = 0;
+	for (int i = 0; i < n; i++)
+	{
+		int f = 0; int l = n - 1;
+		while (f < l)
+		{
+			if (f == i) { f++; continue; }
+			if (l == i) { l--; continue; }
+			if (v[i] > (v[l] + v[f])) {f++;}
+			else if (v[i] < (v[l] + v[f])) {l--;}
+			else if (v[i] == (v[l] + v[f])) { answer++; break; }
+		}
+	}
+	cout << answer;
+	return 0;
+}
