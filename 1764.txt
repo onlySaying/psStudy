@@ -1,0 +1,14 @@
+n, m= map(int, input().split())
+a = set()
+b = set()
+
+for i in range (n) :
+    a.add(input())
+for i in range(m) :
+    b.add(input())
+
+c = sorted(list(a & b))
+print(len(c))
+
+for i in c:
+    print(i)

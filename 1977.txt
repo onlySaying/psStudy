@@ -1,0 +1,48 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<string>
+#include<limits.h>
+
+using namespace std;
+
+bool visit[10001];
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int a, b;
+	cin >> a >> b;
+	int i = 1;
+	while ((i * i) < 10001)
+	{
+		visit[i * i] = true;
+		i++;
+	}
+
+	int min = 0;
+	int total = 0;
+	bool first = true;
+	for (int i = a; i <= b; i++)
+	{
+		if (visit[i]) 
+		{ 
+			total += i; 
+			if (first)
+			{
+				min = i;
+				first = false;
+			}
+		}
+	}
+
+	if (total == 0) { cout << -1;	return 0; }
+
+	cout << total << "\n";
+	cout << min;
+	return 0;
+
+}

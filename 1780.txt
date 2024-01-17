@@ -1,0 +1,86 @@
+#include <iostream>
+#include <memory.h>
+#include <vector>
+
+using namespace std;
+
+int arr[3];
+vector<vector<int>> v;
+
+bool find_val(pair<int, int> p1 , int length)
+{
+	int ys = p1.first;
+	int xs = p1.second;
+	int check = v[ys][xs];
+
+	bool flag = false;
+	for (int i = ys; i < ys + length; i++)
+	{
+		for (int j = xs; j < xs + length; j++)
+		{
+			if (check != v[i][j]) { return true; }
+		}
+	}
+	return false;
+}
+
+void func(int n, pair<int,int> p1)
+{
+	if (n == 1) 
+	{
+		arr[v[p1.first][p1.second]]++;
+		return;
+	}
+	int ys = p1.first;
+	int xs = p1.second;
+	int length = n/3;
+
+	bool flag;
+	for (int i = ys; i < ys + n;)
+	{
+		for (int j = xs; j < xs+n;)
+		{
+			flag = find_val(make_pair(i, j), length);
+			if (!flag) { arr[v[i][j]]++; }
+			else { func(length, make_pair(i, j)); }
+			j += length;
+		}
+		i += length;
+	}
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	
+	int n;
+	cin >> n;
+
+
+
+	for (int i = 0; i < n; i++)
+	{
+		vector<int> line;
+		for (int j = 0; j < n; j++)
+		{
+			int elements;
+			cin >> elements;
+			line.push_back(elements+1);
+		}
+		v.push_back(line);
+	}
+
+	pair<int, int> p1 = {0,0};
+	bool flag = find_val(p1,n);
+	if (!flag) { arr[v[p1.first][p1.second]]++; }
+	else{func(n, p1);}
+	
+
+	for (int i = 0; i < 3; i++)
+	{
+		cout << arr[i] << "\n";
+	}
+
+}

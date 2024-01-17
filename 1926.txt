@@ -1,0 +1,62 @@
+#include<iostream>
+#include<vector>
+#include <queue>
+using namespace std;
+
+bool visit[501][501];
+int mx[] = { 1, -1 , 0 , 0 };
+int my[] = { 0,0, 1, -1 };
+int n, m;
+int answer = 0;
+int num = 0;
+
+int main()
+{
+	
+	cin >> n >> m;
+	vector<vector<int>> draw;
+	int temp;
+	for (int i = 0; i < n; i++)
+	{
+		vector<int> array;
+		for (int j = 0; j < m; j++)
+		{
+			cin >> temp;
+			array.push_back(temp);
+		}
+		draw.push_back(array);
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			if (draw[i][j] == 0 || visit[i][j]) { continue; }
+			num++;
+			queue<pair<int, int>> Q;
+			visit[i][j] = true;
+			Q.push(make_pair(i,j));
+			int area = 0;
+			
+			while (!Q.empty())
+			{
+				area++;
+				pair<int, int> cur = Q.front(); 
+				Q.pop();
+				for (int dir = 0; dir < 4; dir++)
+				{
+					int x = cur.first + mx[dir];
+					int y = cur.second + my[dir];
+					if (x < 0 || x >= n || y < 0 || y >= m) continue;
+					if (visit[x][y] || draw[x][y] == 0) continue;
+					visit[x][y] = true;
+					Q.push(make_pair(x, y));
+				}
+			}
+			answer = max(answer, area);
+		}
+	}
+	
+	cout << num << '\n' << answer;
+	return 0;
+}

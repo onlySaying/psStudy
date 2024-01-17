@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main(void) 
+{
+    int n;
+    cin >> n;
+    int ele;
+    int total = 0;
+    int max = -1001;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> ele;
+        int temp = total + ele;
+        if (max < temp)
+        {
+            max = temp;
+        }
+
+        if (temp < 0)
+        {
+
+            total = 0;
+            continue;
+        }
+
+        total = temp;
+    }
+
+    cout << max;
+    
+    return 0;
+}

@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+#include <memory.h>
+#include <algorithm>
+using namespace std;
+
+long long mat[100];
+
+int main(void) 
+{
+    cin.tie(0);
+    ios::sync_with_stdio(0);
+    
+    int n;
+    cin >> n;
+    mat[1] = 1;
+    mat[2] = 1;
+    for (int i = 3; i <= 90; i++)
+    {
+        mat[i] = mat[i - 1] + mat[i - 2];
+    }
+
+    cout << mat[n];
+
+    return 0;
+}

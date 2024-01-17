@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <unordered_map>
+#include <set>
+using namespace std;
+
+int n, m;
+
+int main(void)
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    cin >> n >> m;
+    int ele;
+    set<int> s;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> ele;
+        s.insert(ele);
+        
+    }
+    
+    for (int i = 0; i < m; i++)
+    {
+        cin >> ele;
+        s.erase(ele);
+    }
+    
+    cout << s.size() << '\n';
+    for (auto ite = s.begin(); ite != s.end(); ite++)
+    {
+        cout << *ite << " ";
+    }
+    return 0;
+}

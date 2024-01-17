@@ -1,0 +1,64 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main(void)
+{
+	int n;
+	cin >> n;
+
+	vector<int> po;
+	vector<int> ne;
+	for (int i = 0; i < n; i++)
+	{
+		int ele;
+		cin >> ele;
+		if (ele > 0)
+		{
+			po.push_back(ele);
+		}
+		else
+		{
+			ne.push_back(ele);
+		}
+	}
+
+	sort(po.begin(), po.end(), greater<int>());
+	sort(ne.begin(), ne.end());
+
+	int st = 0;
+	int total = 0;
+	
+	while(st < po.size())
+	{
+		if ( st+1 < po.size() && po[st] > 1 && po[st + 1] > 1)
+		{
+			total += po[st] * po[st + 1];
+			st += 2;
+		}
+
+		else
+		{
+			total += po[st];
+			st++;
+		}
+	}
+	st = 0;
+	while (st < ne.size())
+	{
+		if (st + 1 < ne.size())
+		{
+			total += (ne[st] * ne[st + 1]);
+			st += 2;
+		}
+		else
+		{
+			total += ne[st];
+			st++;
+		}
+	}
+	cout << total;
+	return 0;
+}

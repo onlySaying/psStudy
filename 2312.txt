@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <unordered_map>
+using namespace std;
+
+bool decimal[100002];
+vector<int> v;
+
+bool cmp(pair<int, int> a, pair<int, int> b)
+{
+	return a.first < b.first;
+}
+int main() 
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	
+	int tc;
+	cin >> tc;
+	for (int i = 2; i < 100001; i++)
+	{
+		if (decimal[i]){continue;}
+		v.push_back(i);
+		for (int j = 2; j * i < 100001; j++)
+		{
+			decimal[i * j] = true;
+		}
+	}
+	
+	while (tc--)
+	{
+		int n;
+		cin >> n;
+		int idx = 0;
+		unordered_map<int, int> um;
+		while (n > 1)
+		{
+
+			if (n % v[idx] == 0)
+			{
+				n /= v[idx];
+				um[v[idx]]++;
+			}
+			else
+			{
+				idx++;
+			}
+		}
+
+		vector<pair<int, int>> pv;
+		for (auto ite = um.begin(); ite != um.end(); ite++)
+		{
+			pv.push_back({ite -> first, ite -> second});
+		}
+		sort(pv.begin(), pv.end(), cmp);
+
+		for (int i = 0; i < pv.size(); i++)
+		{
+			cout << pv[i].first << " " << pv[i].second << "\n";
+		}
+	}
+	
+}

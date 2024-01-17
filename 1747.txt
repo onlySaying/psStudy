@@ -1,0 +1,47 @@
+#include<iostream>
+#include<vector>
+#include <string>
+using namespace std;
+
+const static int Max = 1003002;
+bool isPrimal[Max];
+vector<int> primalV;
+int main()
+{
+	ios::sync_with_stdio(0);
+	cout.tie(0);
+	cin.tie(0);
+
+	int n;
+	cin >> n;
+	
+	for (int i = 2; i < Max; i++)
+	{
+		if (isPrimal[i]) { continue; }
+		primalV.push_back(i);
+		for (int j = 1; i * j < Max; j++)
+		{
+			isPrimal[i * j] = true;
+		}
+	}
+	
+	bool flag = true;
+	for (int ite : primalV)
+	{
+		if (ite < n) { continue; }
+		string temp = to_string(ite);
+		flag = true;
+		for (int i = 0; i < temp.size() / 2; i++)
+		{
+			if(temp[i]== temp[temp.size()-1-i]){}
+			else
+			{
+				flag = false;
+				break;
+			}
+		}
+		if (flag) { cout << ite; break; }
+	}
+
+	return 0;
+}

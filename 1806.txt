@@ -1,0 +1,51 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int main(void)
+{
+	int n, m;
+	cin >> n >> m;
+	vector<int> v;
+	int ele;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> ele;
+		v.push_back(ele);
+		if (ele >= m)
+		{
+			cout << 1;
+			return 0;
+		}
+	}
+	int total = 0;
+	int i= 0, j = 0;
+	total += v[j];
+	int min = 0;
+	while (i <= j)
+	{
+
+		//cout << "total : " << total << " min : " << min << " i : " << i << " j : " << j << endl;
+		if (total >= m)
+		{
+			
+			if (min > (j - i) + 1 || min == 0)
+			{
+				min = j - i + 1;
+			}
+			if (i == v.size()) { break; }
+			total -= v[i];
+			i++;
+		}
+		else
+		{
+			j++;
+			if (j == v.size()) { break; }
+			total += v[j];
+		}
+	}
+	cout << min;
+
+	return 0;
+}

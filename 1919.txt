@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int alphabetR[26];
+int alphabetL[26];
+
+int main()
+{
+	string right;
+	cin >> right;
+	string left;
+	cin >> left;
+
+	int answer = 0;
+	for (int i = 0; i < right.length(); i++)
+	{
+		int temp = right[i] - 'a';
+		alphabetR[temp]++;
+	}
+
+	for (int i = 0; i < left.length(); i++)
+	{
+		int temp = left[i] - 'a';
+		alphabetL[temp]++;
+	}
+
+	for (int i = 0; i < 26; i++)
+	{
+		if (alphabetL[i] != alphabetR[i])
+		{
+			int temp = alphabetL[i] - alphabetR[i];
+			if (temp < 0)
+			{
+				temp *= -1;
+			}
+			answer += temp;
+		}
+	}
+	cout << answer;
+	
+}
