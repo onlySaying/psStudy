@@ -1,0 +1,68 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+#define p pair<int,int>
+//27%
+
+bool cmp(p a, p b)
+{
+	return a.first < b.first;
+}
+int main() 
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	vector<p> v;
+	int num;
+	cin >> num;
+	int bm, bd, fm, fd;
+	
+	for (int i = 0; i < num; i++)
+	{
+		cin >> bm >> bd >> fm >> fd;
+		bd += (bm*100);
+		fd += fm*100;
+		if (bd < fd)
+		{
+			v.push_back({ bd, fd });
+		}
+	}
+	
+	sort(v.begin(), v.end(),cmp);
+	
+	int dd = 301;
+	int md = -1;
+	int answer = 0;
+	int ld = 1130;
+
+	for (int i = 0; i < v.size(); i++)
+	{
+		if (v[i].first <= dd)
+		{
+			if (v[i].second > md)
+			{
+				md = v[i].second;
+			}
+		}
+		else if (v[i].first > dd)
+		{
+			if (md == -1) { answer = 0; break; }
+			dd = md;
+			md = -1;
+			answer++;
+			i--;
+		}
+
+		if (dd > ld) { break; }
+		
+		if (md > ld) { answer++;  break; }
+		else if (i ==  v.size() - 1) { answer = 0; }
+	}
+
+	cout << answer;
+	return 0;
+}
