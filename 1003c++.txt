@@ -1,0 +1,46 @@
+#include <iostream>
+#include <memory.h>
+using namespace std;
+
+int fibo0[42];
+int fibo1[42];
+
+int findfibo0(int n)
+{
+	if (fibo0[n] != -1)
+	{
+		return fibo0[n];
+	}
+	return fibo0[n] = findfibo0(n - 1) + findfibo0(n - 2);
+}
+int findfibo1(int n)
+{
+	if (fibo1[n] != -1)
+	{
+		return fibo1[n];
+	}
+	return fibo1[n] = findfibo1(n - 1) + findfibo1(n - 2);
+}
+int main() 
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int tc;
+	cin >> tc;
+	memset(fibo0, -1, sizeof(fibo0));
+	memset(fibo1, -1, sizeof(fibo1));
+	fibo0[0] = 1;
+	fibo0[1] = 0;
+	fibo1[1] = 1;
+	fibo1[0] = 0;
+	int n;
+	while (tc--)
+	{
+		cin >> n;
+		findfibo0(n);
+		findfibo1(n);
+		cout << fibo0[n] << " " << fibo1[n] << "\n";
+	}
+	return 0;
+}
