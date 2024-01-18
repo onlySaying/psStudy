@@ -1,0 +1,94 @@
+#include <iostream>
+#include <queue>
+#include<vector>
+#include <memory.h>
+#include <tuple>
+
+using namespace std;
+
+bool visit[101][101][101];
+int dist[101][101][101];
+int mx[] = { 1, -1, 0, 0, 0, 0 };
+int my[] = { 0, 0, 1, -1, 0, 0 };
+int mz[] = { 0, 0, 0, 0, 1, -1 };
+
+int main()
+{
+	int m, n, h;
+	cin >> m >> n >> h;
+	vector<vector<vector<int>>> tomatos;
+	queue<tuple<int, int, int>> ripeT;
+	memset(dist, -1, sizeof(dist));
+
+	for (int i = 0; i < h; i++)
+	{
+		vector<vector<int>> tomatoF;
+		for (int j = 0; j < n; j++)
+		{
+			vector<int> tomatoL;
+			for (int k = 0; k < m; k++)
+			{
+				int tomato;
+				cin >> tomato;
+				if (tomato == 1)
+				{
+					ripeT.push(make_tuple(i,j,k));
+					dist[i][j][k] = 0;
+				}
+				tomatoL.push_back(tomato);
+			}
+			tomatoF.push_back(tomatoL);
+		}
+		tomatos.push_back(tomatoF);
+	}
+	int x, y, z;
+
+	while (!ripeT.empty())
+	{
+		tuple<int, int, int> cur = ripeT.front();
+		ripeT.pop();
+		visit[get<0>(cur)][get<1>(cur)][get<2>(cur)] = true;
+		for (int i = 0; i < 6; i++)
+		{
+			x = get<0>(cur) + mx[i];
+			y = get<1>(cur) + my[i];
+			z = get<2>(cur) + mz[i];
+			if (x < 0 || x >= h) { continue; }
+			if (y < 0 || y >= n) { continue; }
+			if (z < 0 || z >= m) { continue; }
+			if (visit[x][y][z] || dist[x][y][z] > -1) { continue; }
+			if (tomatos[x][y][z] == -1) { continue; }
+			dist[x][y][z] = dist[get<0>(cur)][get<1>(cur)][get<2>(cur)] + 1;
+			ripeT.push(make_tuple(x, y, z));
+		}
+	}
+
+	int max = -1;
+	for (int i = 0; i < h; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			for (int k = 0; k < m; k++)
+			{
+				if (dist[i][j][k] == -1)
+				{
+					if (tomatos[i][j][k] != -1)
+					{
+						cout << -1;
+						return 0;
+					}
+				}
+				else
+				{
+					if (max < dist[i][j][k])
+					{
+						max = dist[i][j][k];
+					}
+				}
+			}
+		}
+	}
+
+	cout << max;
+
+}

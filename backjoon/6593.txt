@@ -1,0 +1,87 @@
+#include<iostream>
+#include<vector>
+#include <queue>
+#include <memory.h>
+#include<algorithm>
+#include<tuple>
+
+using namespace std;
+
+int dist[31][31][31];
+
+int mx[] = { -1, 1, 0, 0, 0, 0};
+int my[] = { 0, 0, -1, 1, 0, 0};
+int mz[] = { 0, 0, 0, 0, -1, 1};
+int main()
+{
+	while (true)
+	{
+		memset(dist, -1 , sizeof(dist));
+		int l, r, c;
+		cin >> l >> r >> c;
+		if (l == 0 || r == 0 || c == 0) { break; }
+		vector<vector<vector<char>>> building;
+		string elements;
+		queue<tuple<int, int, int>> q;
+		tuple<int, int, int> entrance;
+		for (int i = 0; i < l; i++)
+		{
+			vector<vector<char>> floor;
+			for (int j = 0; j < r; j++)
+			{
+				vector<char> temp;
+				cin >> elements;
+				for (int k = 0; k < c; k++)
+				{
+					temp.push_back(elements[k]);
+					if (elements[k] == 'S')
+					{
+						q.push(make_tuple(i, j, k));
+						dist[i][j][k] = 0;
+					}
+					if (elements[k] == 'E') { entrance = make_tuple(i, j, k); }
+				}
+				floor.push_back(temp);
+			}
+			building.push_back(floor);
+		}
+
+		tuple<int, int, int> cur;
+		int x, y, z;
+		int answer = -1;
+
+		while (!q.empty())
+		{
+			cur = q.front();
+			q.pop();
+			if (get<0>(cur) == get<0>(entrance) && get<1>(cur) == get<1>(entrance)
+				&& get<2>(cur) == get<2>(entrance))
+			{
+				answer = dist[get<0>(cur)][get<1>(cur)][get<2>(cur)];
+				break;
+			}
+			for (int i = 0; i < 6; i++)
+			{
+				x = get<0>(cur) + mx[i];
+				y = get<1>(cur) + my[i];
+				z = get<2>(cur) + mz[i];
+				if (x < 0 || y < 0 || z < 0) { continue; }
+				if (x >= l || y >= r || z >= c) { continue; }
+				if (dist[x][y][z] != -1 || building[x][y][z] == '#') { continue; }
+				q.push(make_tuple(x, y, z));
+				dist[x][y][z] = dist[get<0>(cur)][get<1>(cur)][get<2>(cur)] + 1;
+			}
+		}
+		while (!q.empty()) { q.pop(); }
+		if (answer == -1)
+		{
+			cout << "Trapped!\n";
+		}
+		else
+		{
+			printf("Escaped in %d minute(s).\n", answer);
+		}
+	}
+	
+	return 0;
+}

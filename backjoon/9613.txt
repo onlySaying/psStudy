@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int gcd(int p, int q)
+{
+	if (q == 0) return p;
+	return gcd(q, p % q);
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int tc;
+	long long answer;
+	cin >> tc;
+	int n;
+	while (tc--)
+	{
+		answer = 0;
+		cin >> n;
+		vector<int> v;
+		for (int i = 0; i < n; i++)
+		{
+			int ele;
+			cin >> ele;
+			v.push_back(ele);
+		}
+		
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = i+1; j < n; j++)
+			{
+				answer += gcd(v[i], v[j]);
+			}
+		}
+
+		cout << answer << '\n';
+	}
+	return 0;
+}

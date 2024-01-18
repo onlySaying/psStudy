@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <memory.h>
+
+using namespace std;
+
+bool visit[100001];
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int n;
+	cin >> n;
+	while (n--)
+	{
+		vector<int> v;
+		memset(visit, false, sizeof(visit));
+		int loop;
+		cin >> loop;
+		for (int i = 0; i < loop; i++)
+		{
+			int temp;
+			cin >> temp;
+			v.push_back(temp - 1);
+		}
+		queue<int> q;
+		int answer = loop;
+		int total = 0;
+		for (int i = 0; i < loop; i++)
+		{
+			if (visit[i]) { continue; }
+			q.push(i);
+			visit[i] = true;
+			vector<int> visitS;
+			bool flag = false;
+			visitS.push_back(i);
+			while (!q.empty())
+			{
+				int cur = q.front();
+				q.pop();
+				if ((visit[v[cur]]))
+				{
+					for (int j = 0; j < visitS.size(); j++)
+					{
+						if (visitS[j] == v[cur])
+						{
+							answer -= visitS.size() - j;
+							while (!q.empty()) { q.pop(); }
+							break;
+						}
+					}
+				}
+				if (visit[v[cur]]) { continue; }
+
+				visit[v[cur]] = true;
+				visitS.push_back(v[cur]);
+				q.push(v[cur]);
+			}
+			while (!q.empty()) { q.pop(); }
+		}
+
+		cout << answer << "\n";
+	}
+}

@@ -1,0 +1,32 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+
+int main()
+{
+	cin.tie(0);
+	ios_base::sync_with_stdio(false);
+	int n;
+	cin >> n;
+	stack<int> s;
+	int temp;
+	long long answer = 0;
+	while (n > 0)
+	{
+		n--;
+		cin >> temp;
+	
+		while (!s.empty() && s.top() <= temp)
+		{
+			s.pop();
+		}
+		answer += s.size();
+
+		s.push(temp);
+	}
+
+	cout << answer++;
+
+
+}

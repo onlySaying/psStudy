@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	
+	int tc;
+	cin >> tc;
+	int h, w, n;
+	while (tc--)
+	{
+		cin >> h >> w >> n;
+		
+		string answer = "";
+		int num = 1;
+		int f = 0;
+			
+		num += (n-1)/h;
+		if (n%h == 0)
+		{
+			f = h;
+		}
+		else
+		{
+			f += n % h;
+		}
+		answer += to_string(f);
+		if (num >= 10)
+		{
+			answer += to_string(num);
+		}
+		else
+		{
+			answer += "0";
+			answer += to_string(num);
+		}
+		cout << answer << '\n';
+	}
+
+	return 0;
+}

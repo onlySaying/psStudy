@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+
+using namespace std;
+
+typedef long long ll;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int n, m;
+	cin >> n >> m;
+
+	vector<int> account(n);
+	int total = 0;
+	int maxD = 0;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> account[i];
+		total += account[i];
+		maxD = max(maxD, account[i]);
+	}
+	
+	int st = maxD;
+	int en = 1000000000;
+	int ans = st;
+	
+	while(st <= en)
+	{
+		
+		int mid = (st + en + 1) / 2;
+		int cnt = 1;
+		int cash = mid;
+		for (int i = 0; i < account.size(); i++)
+		{
+			if (cash >= account[i])
+			{
+				cash -= account[i];
+				continue;
+			}
+			cash = mid;
+			cnt++;
+			cash -= account[i];
+			//cout << "cash out : number of " << i;
+			//cout << "\ncnt up : " << cnt << endl;
+		}
+		//cout << "\n\nst : " << st << "  en : " << en;
+		//cout <<"  cnt : " << cnt << "  mid : " << mid << endl;
+		if (cnt > m)
+		{
+			if (st >= mid)
+			{
+				break;
+			}
+			st = mid;
+		}
+		if (cnt <= m)
+		{
+			ans = mid;
+			en = mid-1;
+		}
+
+	}
+	cout << ans;
+	
+}

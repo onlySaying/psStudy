@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int gcd(int p, int q)
+{
+	if (q == 0) { return p; }
+	return gcd(q, p % q);
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int tc;
+	cin >> tc;	
+	while (tc--)
+	{
+		int m, n, x, y;
+		cin >> m >> n >> x >> y;
+		int doomsDayX = x;
+		int doomsDayY = y;
+		int lcm = m / gcd(m, n);
+		lcm *= n;
+		for(int i = 0; doomsDayX <= lcm || doomsDayY <= lcm ; i++)
+		{
+			if (doomsDayX == doomsDayY)
+			{
+				break;
+			}
+			else if (doomsDayX > doomsDayY)
+			{
+				doomsDayY += n;
+			}
+			else
+			{
+				doomsDayX += m;
+			}
+		}
+		if(doomsDayX == doomsDayY)
+		{
+			cout << doomsDayX << '\n';
+		}
+		else
+		{
+			cout << -1 << '\n';
+		}
+		
+	}
+
+	return 0;
+}
+​

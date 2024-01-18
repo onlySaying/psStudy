@@ -1,0 +1,47 @@
+#include<iostream>
+#include<vector>
+#include<queue>
+#include<algorithm>
+#include <stack>
+#include <memory.h>
+
+using namespace std;
+
+int dp[2][100002];
+
+int main(void)
+{
+	cin.tie(0);
+	ios::sync_with_stdio(0);
+	
+	int tc;
+	cin >> tc;
+	while (tc--)
+	{
+		int n;
+		cin >> n;
+		vector<int> top(n);
+		vector<int> bot(n);
+		for (int i = 0; i < n; i++)
+		{
+			cin >> top[i];
+		}
+		for (int i = 0; i < n; i++)
+		{
+			cin >> bot[i];
+		}
+		dp[0][0] = top[0];
+		dp[1][0] = bot[0];
+		dp[0][1] = top[1] + dp[1][0];
+		dp[1][1] = bot[1] + dp[0][0];
+		for (int i = 2; i < n; i++)
+		{
+			dp[0][i] = top[i] + max(dp[1][i-1], dp[1][i-2]);
+			dp[1][i] = bot[i] + max(dp[0][i-1], dp[0][i-2]);
+		}
+
+		cout << max(dp[0][n-1], dp[1][n-1]) << '\n';
+
+	}
+	return 0;
+}

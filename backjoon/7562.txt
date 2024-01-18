@@ -1,0 +1,52 @@
+#include <iostream>
+#include <queue>
+#include <memory.h>
+#include <vector>
+
+using namespace std;
+
+int mx[] = { -2, -2, -1, -1, 1, 1, 2, 2};
+int my[] = { 1, -1, 2, -2, 2, -2, 1, -1};
+int nom[300][300];
+
+int main()
+{
+	int n;
+	cin >> n;
+	while (n--)
+	{
+		memset(nom, -1, sizeof(nom));
+		int len;
+		cin >> len;
+		int nightX, nightY;
+		int desX, desY;
+		cin >> nightX >> nightY;
+		cin >> desX >> desY;
+		queue<pair<int, int>> moveS;
+		moveS.push(make_pair (nightX, nightY));
+		nom[nightX][nightY] = 0;
+		int x, y;
+		int answer = 0;
+		while (!moveS.empty())
+		{
+			pair<int, int> cur = moveS.front();
+			moveS.pop();
+			if (cur.first == desX && cur.second == desY)
+			{
+				answer = nom[desX][desY];
+				break;
+			}
+			for (int i = 0; i < 8; i++)
+			{
+				x = cur.first + mx[i];
+				y = cur.second + my[i];
+				if (x < 0 || y < 0 || x >= len || y >= len) { continue; }
+				if (nom[x][y] > -1) {continue; }
+				moveS.push(make_pair(x,y));
+				nom[x][y] = nom[cur.first][cur.second] + 1;
+			}
+		}
+		cout << answer << "\n";
+	}
+	return 0;
+}

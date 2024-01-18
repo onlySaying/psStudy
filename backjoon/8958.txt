@@ -1,0 +1,13 @@
+n = int(input())
+
+for i in range(n) :
+    ox = str(input())
+    point = 0
+    cnt = 0
+    for j in list(ox) :
+        if(j == 'O') :
+            cnt = cnt + 1
+            point += cnt
+        elif (j == 'X') : cnt =0
+
+    print(point)
