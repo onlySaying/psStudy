@@ -1,0 +1,74 @@
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+int main()
+{
+	stack<char> cs;
+	stack<char> ca;
+	string temp;
+	int idx = 0;
+	int cntS = 0;
+	int cntB = 0;
+	while (1)
+	{
+		getline(cin, temp);
+		idx = 0;
+		cntB = 0;
+		cntS = 0;
+		if (temp == ".") { break; }
+
+		while (1)
+		{
+			if (temp[idx] == '.') break;
+
+			if (temp[idx] == '[')
+			{
+				cs.push(temp[idx]);
+				cntB++;
+			}
+			else if (temp[idx] == '(')
+			{
+				cs.push(temp[idx]);
+				cntS++;
+			}
+			else if (temp[idx] == ')')
+			{
+				cntS--;
+				if (cs.empty() || cs.top() != '(' || cntS < 0)
+				{
+					break;
+				}
+				cs.pop();
+			}
+			else if (temp[idx] == ']')
+			{
+				cntB--;
+				if (cs.empty() || cs.top() != '[' || cntB < 0)
+				{
+					break;
+				}
+				cs.pop();
+			}
+			idx++;
+		}
+
+		if (cs.empty() && cntS == 0 && cntB == 0)
+		{
+			cout << "yes\n";
+		}
+		else
+		{
+			cout << "no\n";
+		}
+		
+		while (!cs.empty())
+		{
+			cs.pop();
+		}
+
+
+	}
+	return 0;
+}

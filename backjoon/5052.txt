@@ -1,0 +1,82 @@
+#include <iostream>
+#include <cstring>
+#include <string>
+#include <vector>
+using namespace std;
+
+const int ROOT = 1;
+int unused = 2;
+const int MX = 10000 * 10 + 5;
+bool chk[MX];
+int nxt[MX][11];
+
+bool insert(string number)
+{
+	int cur = ROOT;
+	bool flag = false;
+	for (char s : number)
+	{
+		int temp = int(s) - '0';
+		
+		if (nxt[cur][temp] == -1)
+		{
+			nxt[cur][temp] = unused++;
+			flag = true;
+		}
+		if (chk[cur])
+		{
+			return false;
+		}
+		cur = nxt[cur][temp];
+	}
+	chk[cur] = true;
+	return flag;
+}
+
+int main(void)
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int tc;
+	cin >> tc;
+
+	while (tc--)
+	{
+		unused = 2;
+		fill(chk, chk + MX, false);
+		for (int i = 0; i < MX; i++)
+		{
+			fill(nxt[i], nxt[i] + 10, -1);
+		}
+		int n;
+		cin >> n;
+
+		bool flag = true;
+		string number;
+		while (n--)
+		{
+			cin >> number;
+			flag = insert(number);
+			if (!flag)
+			{
+				break;
+			}
+		}
+		while(n>0)
+		{
+			n--;
+			cin >> number;
+		}
+
+		if (!flag)
+		{
+			cout << "NO\n";
+		}
+		else
+		{
+			cout << "YES\n";
+		}
+	}
+
+	return 0;
+}

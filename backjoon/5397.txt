@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+#include <list>
+
+using namespace std;
+
+
+int main()
+{
+	int n;
+	cin >> n;
+	for (int k = 0; k < n; k++)
+	{
+		string temp;
+		cin >> temp;
+
+		list<char> l;
+		list<char>::iterator idx;
+		l.clear();
+
+		idx = l.begin();
+
+		for (int i = 0; i < temp.length(); i++)
+		{
+
+			if (temp[i] == '<')
+			{
+				if (idx != l.begin())
+				{
+					idx--;
+				}
+			}
+			else if (temp[i] == '>')
+			{
+				if (idx != l.end())
+				{
+					idx++;
+				}
+			}
+			else if (temp[i] == '-')
+			{
+				if (idx != l.begin())
+				{
+					idx = l.erase(--idx);
+				}
+			}
+			else
+			{
+				l.insert(idx, temp[i]);
+			}
+		}
+		for (auto ite = l.begin(); ite != l.end(); ite++)
+		{
+			cout << *ite;
+		}
+		cout << endl;
+	}
+}

@@ -1,0 +1,42 @@
+#include<iostream>
+
+using namespace std;
+
+//#define Max 246912
+
+static const int Max = 246913;
+
+bool decimal[Max];
+
+int main()
+{
+	int n;
+	decimal[0] = true;
+	decimal[1] = true;
+	for (int i = 2; i < Max; i++)
+	{
+		for (int j = 2; i * j < Max; j++)
+		{
+			if (!decimal[i * j])
+			{
+				decimal[i * j] = true;
+			}
+		}
+	}
+	int answer = 0;
+	while (true)
+	{
+		cin >> n;
+		answer = 0;
+		if (n == 0)
+		{
+			break;
+		}
+		for (int i = n+1; i <= (2*n); i++)
+		{
+			if (!decimal[i]) { answer++; }
+		}
+		cout << answer << "\n";
+	}
+	
+}

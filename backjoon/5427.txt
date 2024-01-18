@@ -1,0 +1,103 @@
+#include<iostream>
+#include<vector>
+#include <queue>
+#include <memory.h>
+using namespace std;
+
+int mx[] = { 1, -1 , 0 , 0 };
+int my[] = { 0,0, 1, -1 };
+int maxX, maxY;
+int answer = 10000000;
+int dist1[1001][1001];
+int dist2[1001][1001];
+
+int main()
+{
+	int tc; 
+	cin >> tc;
+	while (tc--)
+	{
+		answer = 10000000;
+		cin >> maxY >> maxX;
+		vector<vector<char>> draw;
+		char temp;
+		queue<pair<int, int>> jArea;
+		queue<pair<int, int>> fArea;
+		memset(dist1, -1, sizeof(dist1));
+		memset(dist2, -1, sizeof(dist2));
+		for (int i = 0; i < maxX; i++)
+		{
+			vector<char> array;
+			for (int j = 0; j < maxY; j++)
+			{
+				cin >> temp;
+				if (temp == '@')
+				{
+					jArea.push(make_pair(i, j));
+					dist2[i][j] = 1;
+				}
+				else if (temp == '*')
+				{
+					fArea.push(make_pair(i, j));
+					dist1[i][j] = 1;
+				}
+				array.push_back(temp);
+			}
+			draw.push_back(array);
+		}
+		while (!fArea.empty())
+		{
+			pair<int, int> cur = fArea.front();
+			fArea.pop();
+			for (int dir = 0; dir < 4; dir++)
+			{
+				int x = cur.first + mx[dir];
+				int y = cur.second + my[dir];
+				if (x < 0 || x >= maxX || y < 0 || y >= maxY) { continue; }
+				if (dist1[x][y] > 0 || draw[x][y] == '#') { continue; }
+				dist1[x][y] = dist1[cur.first][cur.second] + 1;
+				fArea.push(make_pair(x, y));
+			}
+		}
+		while (!jArea.empty())
+		{
+			pair<int, int> cur = jArea.front();
+			jArea.pop();
+			if (cur.first == maxX - 1 || cur.first == 0 || cur.second == maxY - 1 || cur.second == 0)
+			{
+				answer = min(answer, dist2[cur.first][cur.second]);
+			}
+			for (int dir = 0; dir < 4; dir++)
+			{
+				int x = cur.first + mx[dir];
+				int y = cur.second + my[dir];
+				//cout << "x : " << x << " y : " << y << endl;
+				if (x < 0 || x >= maxX || y < 0 || y >= maxY) {
+					//cout << "a\n"; 
+					continue;
+				}
+				if (dist2[x][y] > 0 || draw[x][y] == '#') { //cout << "b\n"; 
+					continue;
+				}
+				dist2[x][y] = dist2[cur.first][cur.second] + 1;
+				if (dist1[x][y] != -1)
+				{
+					if (dist2[x][y] >= dist1[x][y]) { //cout << "c\n"; 
+						continue;
+					}
+				}
+				jArea.push(make_pair(x, y));
+			}	
+		}
+		if (answer == 10000000)
+		{
+			cout << "IMPOSSIBLE\n";
+
+		}
+		else
+		{
+			cout << answer << '\n';
+		}
+	}
+	return 0;
+}

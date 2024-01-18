@@ -1,0 +1,103 @@
+#include <iostream>
+#include <deque>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int tc;
+	cin >> tc;
+	while (tc--)
+	{
+		string commands;
+		cin >> commands;
+		vector<char> command;
+		for (int i = 0; i < commands.size(); i++)
+		{
+			command.push_back(commands[i]);
+		}
+
+		int arrayL;
+		cin >> arrayL;
+
+		string array;
+		cin >> array;
+
+		array = array.substr(1);
+
+		int element = 0;
+		deque<int> arr;
+
+		for (int i = 0; i < array.size(); i++)
+		{
+			char temp = array[i];
+			if (temp == ',' || temp == ']')
+			{
+				arr.push_back(element);
+				element = 0;
+			}
+			else
+			{
+				element *= 10;
+				element += temp - '0';
+			}
+		}
+
+		if (arrayL == 0)
+		{
+			arr.pop_back();
+		}
+
+		bool flag = true;
+		bool output = true;
+		for (int i = 0; i < command.size(); i++)
+		{
+			if (command[i]== 'R')
+			{
+				flag = !flag;
+			}
+			else if (command[i] == 'D')
+			{
+				if (arr.empty())
+				{
+					cout << "error\n";
+					output = false;
+					break;
+				}
+				if (flag)
+				{
+					arr.pop_front();
+				}
+				else
+				{
+					arr.pop_back();
+				}
+			}
+		}
+
+		if (!output) { continue; }
+		cout << "[";
+		int len = arr.size();
+		for (int i = 0; i < len; i++)
+		{
+			if (flag)
+			{
+				cout << arr.front();
+				arr.pop_front();
+			}
+			else
+			{
+				cout << arr.back();
+				arr.pop_back();
+			}
+
+			if (i < (len-1))
+			{
+				cout << ',';
+			}
+		}
+		cout << "]\n";
+		
+	}
+}
