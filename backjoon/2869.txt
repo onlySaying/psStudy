@@ -1,0 +1,20 @@
+#include<iostream>
+
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cout.tie(0);
+	cin.tie(0);
+	int a, b, v;
+	cin >> a >> b >> v;
+	
+	v -= a;
+	int temp = v;
+	v /= (a - b);
+	if (temp % (a - b) != 0) { v += 1; }
+	v += 1;
+	
+	cout << v;
+}

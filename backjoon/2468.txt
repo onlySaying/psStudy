@@ -1,0 +1,85 @@
+#include<iostream>
+#include<vector>
+#include <queue>
+#include <memory.h>
+#include<algorithm>
+using namespace std;
+
+int visit [101][101];
+int save[101];
+bool inFloor[101];
+
+int mx[] = { 1, -1, 0, 0};
+int my[] = { 0, 0, 1, -1};
+
+int main()
+{
+	int n;
+	cin >> n;
+	vector<vector<int>> v;
+	int element;
+	int max = 0;
+	for (int i = 0; i < n; i++)
+	{
+		vector<int> temp;
+		for (int j = 0; j < n; j++)
+		{
+			cin >> element;
+			temp.push_back(element);
+			inFloor[element] = true;
+			if (max < element)
+			{
+				max = element;
+			}
+		}
+		v.push_back(temp);
+	}
+	save[0] = 1;
+	int idx = 0;
+	pair<int, int> cur;
+	int x, y;
+	while (idx <= max - 1)
+	{
+		idx++;
+		if (!inFloor[idx]) { continue; }
+		queue<pair<int, int>> q;
+		memset(visit, false, sizeof(visit));
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				if (visit[i][j]) { continue; }
+				if (v[i][j] <= idx) { continue; }
+				q.push(make_pair(i, j));
+				visit[i][j] = true;
+				save[idx]++;
+				while (!q.empty())
+				{
+					cur = q.front();
+					q.pop();
+					for (int m = 0; m < 4; m++)
+					{
+						x = cur.first + mx[m];
+						y = cur.second + my[m];
+						if (x < 0 || y < 0 || x >= n || y >= n) { continue; }
+						if (visit[x][y]) { continue; }
+						if (v[x][y] <= idx) { continue; }
+						visit[x][y] = true;
+						q.push(make_pair(x, y));
+					}
+				}
+			}
+		}
+	}
+	
+	int answer = 0;
+	for (int i = 0; i < max; i++)
+	{
+		if (answer < save[i])
+		{
+			answer = save[i];
+		}
+	}
+	cout << answer;
+	return 0;
+}

@@ -1,0 +1,44 @@
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+int main()
+{
+	stack<char> ca;
+	string temp;
+	int n;
+	cin >> n;
+	int idx = 0;
+	int answer = 0;
+	while (n > 0)
+	{
+		n--;
+		cin >> temp;
+		idx = 0;
+		while (idx < temp.length())
+		{
+			if (!ca.empty() && ca.top() == temp[idx])
+			{
+				ca.pop();
+			}
+			else
+			{
+				ca.push(temp[idx]);
+			}
+
+			idx++;
+		}
+		if (ca.empty())
+		{
+			answer++;
+		}
+		while (!ca.empty())
+		{
+			ca.pop();
+		}
+
+	}
+	cout << answer;
+	return 0;
+}

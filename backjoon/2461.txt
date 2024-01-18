@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <limits.h> 
+#include <map>
+
+using namespace std;
+
+bool cmp(pair<int, int> a, pair<int, int> b)
+{
+    if (a.first == b.first)
+    {
+        return a.second < b.second;
+    }
+    return a.first < b.first;
+}
+
+int main(void)
+{
+    cin.tie(0);
+    ios::sync_with_stdio(0);
+    int n, m;
+
+    cin >> n >> m;
+
+    vector <pair<int, int>> v;
+    int ele;
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            cin >> ele;
+            v.push_back({ ele, i });
+        }
+    }
+
+    sort(v.begin(), v.end(), cmp);
+   
+    int small = INT_MAX;
+    map<int, int> maps;
+    int en = 0;
+    int st = 0;
+    while (en < v.size())
+    {
+        
+        maps[v[en].second]++;
+        while (maps.size() == n)
+        {
+            small = min(small, abs(v[en].first - v[st].first));
+            maps[v[st].second] -= 1;
+            if (maps[v[st].second] == 0)
+            {
+                maps.erase(v[st].second);
+            }
+            st++;
+        }
+        en++;
+    }
+    cout << small;
+    return 0;
+}

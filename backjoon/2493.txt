@@ -1,0 +1,37 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+
+int main()
+{
+	cin.tie(0);
+	ios_base::sync_with_stdio(false);
+	int n;
+	cin >> n;
+	stack<pair<int, int>> s;
+	int idx = 0;
+	int temp;
+	while (n > 0)
+	{
+		n--;
+		idx++;
+		cin >> temp;
+
+		while (!s.empty())
+		{
+			if (temp <= s.top().second)
+			{
+				cout << s.top().first << " ";
+				break;
+			}
+			s.pop();
+		}
+		if (s.empty())
+		{
+			cout << "0 ";
+		}
+		s.push(make_pair(idx, temp));
+	}
+	
+}

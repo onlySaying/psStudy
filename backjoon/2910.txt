@@ -1,0 +1,68 @@
+#include<iostream>
+#include<string>
+#include<unordered_map>
+#include<vector>
+#include<tuple>
+#include<algorithm>
+
+using namespace std;
+
+bool cmp(tuple<int, int, int> a, tuple<int, int, int> b)
+{
+	// 입력받은 값이 같을 경우 idx비교
+	if (get<1>(a) == get<1>(b))
+	{
+		return get<2>(a) < get<2>(b);
+	}
+	// 입력 받은 수의 갯수를 저장
+	return get<1>(a) > get<1>(b);
+}
+
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+	unordered_map<int, pair<int,int>> um;
+	int n;
+	int c;
+
+	cin >> n >> c;
+	
+	int ele;
+	// 값 map에 저장
+	for (int i = 0; i < n; i++)
+	{
+		cin >> ele;
+		if (um.find(ele) == um.end())
+		{
+			um[ele].first = 1;
+			um[ele].second = i;
+		}
+		else
+		{
+			um[ele].first++;
+		}
+	}
+
+	// 입력 받은 값에 idx 추가 하기 위한 백터 입력 값, 횟수, idx순으로 저장
+	vector<tuple<int, int, int>> v;
+	
+	// 들어간 값들 idx 추가후 정렬을 쉽게하기 위해서 vector에 새로 저장
+	for (auto ite = um.begin(); ite != um.end(); ite++)
+	{
+		v.push_back({ ite->first, ite->second.first, ite->second.second });
+	}
+	
+	// 정렬
+	sort(v.begin(), v.end(), cmp);
+
+	for (int i = 0; i < v.size(); i++)
+	{
+		int repeat = get<1>(v[i]);
+		while (repeat--)
+		{
+			cout << get<0>(v[i]) << ' ';
+		}
+	}
+}

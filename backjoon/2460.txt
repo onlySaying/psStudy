@@ -1,0 +1,26 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int n = 10;
+	int total = 0;
+	int maxN = -1;
+	while (n--)
+	{
+		int p, m;
+		cin >> p >> m;
+
+		total -= p;
+		total += m;
+
+		maxN = max(maxN, total);
+	}
+	cout << maxN;
+}

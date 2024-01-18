@@ -1,0 +1,100 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <memory.h>
+
+using namespace std;
+
+bool visit[301][301];
+int mx[] = { 1, -1, 0 ,0};
+int my[] = { 0, 0, 1, -1};
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int n, m;
+	cin >> n >> m;
+	vector<vector<int>> iceburg;
+	for (int i = 0; i < n; i++)
+	{
+		vector<int> line;
+		for (int j = 0; j < m; j++)
+		{
+			int temp;
+			cin >> temp;
+			line.push_back(temp);
+		}
+		iceburg.push_back(line);
+	}
+	
+	int idx = 0;
+	int answer = 0;
+	queue<pair<int, int>> q;
+	while (true)
+	{
+		
+		idx++;
+		vector<vector<int>> temp = iceburg;
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				if (iceburg[i][j] == 0) { continue; }
+				pair<int, int> cur = {i,j};
+				for (int ite = 0; ite < 4; ite++)
+				{
+					int x = cur.first + mx[ite];
+					int y = cur.second + my[ite];
+					if (x < 0 || y < 0 || x >= n || y >= m) { continue; }
+					if (iceburg[x][y] == 0) 
+					{
+						temp[i][j]--;
+						if (temp[i][j] == 0) { break; }
+					}
+					
+				}
+			}
+		}
+		iceburg = temp;
+		int pcs = 0;
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				if (iceburg[i][j] == 0) 
+				{ 
+					continue; 
+				}
+				if (visit[i][j]) 
+				{
+					continue; 
+				}
+				pcs++;
+				q.push(make_pair(i, j));
+				visit[i][j] = true;
+				while (!q.empty())
+				{
+					pair<int, int> cur = q.front();
+					q.pop();
+					for (int ite = 0; ite < 4; ite++)
+					{
+						int x = cur.first + mx[ite];
+						int y = cur.second + my[ite];
+						if (x < 0 || y < 0 || x >= n || y >= m) { continue; }
+						if (visit[x][y]) { continue; }
+						if (iceburg[x][y] == 0) { continue; }
+						q.push(make_pair(x, y));
+						visit[x][y] = true;
+					}
+				}
+			}
+		}
+		if (pcs == 0) { break; }
+		if (pcs >= 2) { answer = idx; break; }
+		memset(visit, false, sizeof(visit));
+		while (!q.empty()) { q.pop(); }
+	}
+	cout << answer;
+}

@@ -1,0 +1,89 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<string>
+#include<limits.h>
+
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	
+	string line;
+	cin >> line;
+	int ans = 0;
+	for(int i = 0; i < line.size(); i++)
+	{
+	//	cout << "ans : " << ans << endl;
+	//	cout << "i : " << i << " line[i] : " << line[i] << endl;
+		if (line[i] == 'c')
+		{
+			if (i == line.size() - 1) { ans++; continue; }
+			if (line[i + 1] == '=')
+			{
+				i++;
+				ans++;
+				continue;
+			}
+			if (line[i + 1] == '-')
+			{
+				i++;
+				ans++;
+				continue;
+			}
+		}
+
+		if (line[i] == 'd')
+		{
+			if (i == line.size() - 1) { ans++; continue; }
+
+			if (line[i+1] == '-')
+			{
+				i++;
+				ans++;
+				continue;
+			}
+			if ((i + 2) < line.size() && line[i + 1] == 'z')
+			{
+				if (line[i + 2] == '=')
+				{
+					i += 2;
+					ans++;
+					continue;
+				}
+			}
+		}
+
+		if (line[i] == 'l')
+		{
+			if (i == line.size() - 1) { ans++; continue; }
+			if (line[i + 1] == 'j') { i++; ans++; continue; }
+		}
+
+		if (line[i] == 'n')
+		{
+			if (i == line.size() - 1) { ans++; continue; }
+			if (line[i + 1] == 'j') { i++; ans++; continue; }
+		}
+
+		if (line[i] == 's')
+		{
+			if (i == line.size() - 1) { ans++; continue; }
+			if (line[i + 1] == '=') { i++; ans++; continue; }
+		}
+
+		if (line[i] == 'z')
+		{
+			if (i == line.size() - 1) { ans++; continue; }
+			if (line[i + 1] == '=') { i++; ans++; continue; }
+		}
+
+		ans++;
+
+	}
+
+	cout << ans;
+}

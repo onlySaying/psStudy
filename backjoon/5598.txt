@@ -1,0 +1,31 @@
+#include<iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+	string cae;
+	cin >> cae;
+	for (int i = 0; i < cae.size(); i++)
+	{
+		if (cae[i] == 'A')
+		{
+			cae[i] = 'X';
+		}
+		else if (cae[i] == 'B')
+		{
+			cae[i] = 'Y';
+		}
+		else if (cae[i] == 'C')
+		{
+			cae[i] = 'Z';
+		}
+		else
+		{
+			cae[i] -= 3;
+		}
+	}
+	cout << cae;
+}

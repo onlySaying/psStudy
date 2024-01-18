@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <map>
+using namespace std;
+
+
+int main(void)
+{
+	cin.tie(0);
+	ios::sync_with_stdio(0);
+	int n, d, k, c;
+
+	cin >> n >> d >> k >> c;
+	map<int, int> m;
+	vector<int> v;
+	m.insert({ c, 1 });
+
+	int st = 0;
+	int en = 0;
+	int cnt = 0;
+	int maximum = 0;
+
+	for (int i = 0; i < n; i++)
+	{
+		if (cnt >= k)
+		{
+			maximum = max(maximum, (int)m.size());
+			m[v[st]]--;
+			if (m[v[st]] == 0)
+			{
+				m.erase(v[st]);
+			}
+			st++;
+		}
+
+		int sushi;
+
+		cin >> sushi;
+		m[sushi]++;
+
+		v.push_back(sushi);
+		cnt++;
+	}
+	for (int i = 0; i < k; i++)
+	{
+		if (cnt >= k)
+		{
+			maximum = max(maximum, (int)m.size());
+			m[v[st]]--;
+			if (m[v[st]] == 0)
+			{
+				m.erase(v[st]);
+			}
+			st++;
+			if (st == n)
+			{
+				st = 0;
+			}
+		}
+		m[v[i]]++;
+	}
+	maximum = max(maximum, (int)m.size());
+	cout << maximum;
+	return 0;
+}

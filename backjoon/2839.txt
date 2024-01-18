@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <memory.h>
+#include <math.h>
+using namespace std;
+
+int sugar[5005];
+
+int sugarBag(int n)
+{
+	if (n < 3 || n == 4)
+	{
+		sugar[n] = -1;
+		return sugar[n];
+	}
+	if (sugar[n] != 0)
+	{
+		return sugar[n];
+	}
+	int temp1 = 0;
+	int temp2 = 0;
+	
+	temp1 = sugarBag(n-3);
+	if (temp1 != -1) { temp1 += 1; }
+	
+	temp2 = sugarBag(n - 5);
+	if (temp2 != -1) { temp2 += 1; }
+	if (temp1 == -1 && temp2 == -1) {return -1; }
+	else if (temp1 == -1) {  sugar[n] = temp2; }
+	else if (temp2 == -1) {  sugar[n] = temp1; }
+	else { sugar[n] = min(temp1, temp2); }
+	return sugar[n];
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	sugar[3] = 1;
+	sugar[5] = 1;
+	int n;
+	cin >> n;
+	int answer = sugarBag(n);
+	cout << answer;
+	return 0;
+}

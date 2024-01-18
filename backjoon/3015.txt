@@ -1,0 +1,44 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main()
+{
+	cin.tie(0);
+	cout.tie(0);
+	ios_base::sync_with_stdio(false);
+	int n;
+	cin >> n;
+	stack<pair<long long, long long>> s;
+	long long answer = 0;
+	int temp;
+	int idx;
+	while (n > 0)
+	{
+		idx = 1;
+		n--;
+		cin >> temp;
+		while (!s.empty() && s.top().first < temp)
+		{
+			answer += s.top().second;
+			s.pop();
+		}
+		if (!s.empty())
+		{
+			if (s.top().first == temp)
+			{
+				answer += s.top().second;
+				idx = s.top().second + 1;
+				if (s.size() > 1) answer++;
+
+				s.pop();
+			}
+			else
+			{
+				answer++;
+			}
+		}
+		s.push(make_pair(temp, idx));
+	}
+	cout << answer;
+}

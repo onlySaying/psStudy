@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main(void)
+{
+	int n;
+	cin >> n;
+
+	vector<int> v(n);
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> v[i];
+	}
+	int st = (v.size()-1);
+	
+	int total = 0;
+	while (st - 1 >= 0)
+	{
+		if (v[st] > v[st - 1])
+		{
+			st--;
+			continue;
+		}
+		else if (v[st] == v[st - 1])
+		{
+			v[st - 1]--;
+			st--;
+			total++;
+		}
+		else
+		{
+			//cout << "v[" << st << "] : " << v[st] << " v[" << st - 1 << "] :" << v[st - 1];
+			//cout << "v[st-1] - v[st] + 1 :" << (v[st - 1] - v[st]) + 1 << endl;
+			total += (v[st - 1] - v[st]) +1;
+			v[st - 1] -= (v[st - 1] - v[st]) + 1;
+			st--;
+		}
+	}
+	
+	cout << total;
+
+	return 0;
+}
