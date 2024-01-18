@@ -1,0 +1,75 @@
+#include <iostream>
+#include <deque>
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+	int n = 0;
+	cin >> n;
+	deque<int> dq;
+	string temp;
+	int a;
+	while (n > 0)
+	{
+		n--;
+		cin >> temp;
+		if (temp == "push_back")
+		{
+			cin >> a;
+			dq.push_back(a);
+			continue;
+		}
+		else if (temp == "push_front")
+		{
+			cin >> a;
+			dq.push_front(a);
+			continue;
+		}
+		else if (temp == "size")
+		{
+			cout << dq.size() << "\n";
+			continue;
+		}
+
+		if (dq.empty())
+		{
+			if (temp == "empty")
+			{
+				cout << "1\n";
+			}
+			else
+			{
+				cout << "-1\n";
+			}
+		}
+		else
+		{
+			if (temp == "empty")
+			{
+				cout << "0\n";
+			}
+			else if (temp == "front")
+			{
+				cout << dq.front() << "\n";
+			}
+			else if (temp == "back")
+			{
+				cout << dq.back() << "\n";
+			}
+			else if (temp == "pop_front")
+			{
+				cout << dq.front() << "\n";
+				dq.pop_front();
+			}
+			else if (temp == "pop_back")
+			{
+				cout << dq.back() << "\n";
+				dq.pop_back();
+			}
+		}
+
+	}
+}

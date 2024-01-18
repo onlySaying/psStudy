@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main(void)
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int n;
+	cin >> n;
+	vector<int> v;
+	int ele;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> ele;
+		v.push_back(ele);
+	}
+	sort(v.begin(), v.end());
+	int m;
+	cin >> m;
+	while (m--)
+	{
+		int fn;
+		cin >> fn;
+		cout <<  binary_search(v.begin(), v.end(), fn) << " ";
+	}
+	return 0;
+}

@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int alphabet[26];
+
+int main()
+{
+	int answer = 0;
+
+	string word;
+	cin >> word;
+
+	for (int i = 0; i < word.length(); i++)
+	{
+		int temp = word[i] - 'a';
+		alphabet[temp]++;
+	}
+	
+
+	for (int i = 0; i < 26; i++)
+	{
+		cout << alphabet[i];
+		if (i < 25)
+		{
+			cout << " ";
+		}
+	}
+	
+}

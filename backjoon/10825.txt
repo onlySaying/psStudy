@@ -1,0 +1,58 @@
+#include <iostream>
+#include <algorithm>
+#include<vector>
+#include<string>
+
+using namespace std;
+
+bool cmp(pair<pair<string, int>, pair<int, int>> a1, pair<pair<string, int>, pair<int, int>> a2)
+{
+	if (a1.first.second == a2.first.second)
+	{
+		if (a1.second.first == a2.second.first)
+		{
+			if (a1.second.second == a2.second.second)
+			{
+				int a1L = a1.first.first.length();
+				int a2L = a2.first.first.length();
+				int length = a1L;
+				if (a1L > a2L) {length = a2L;}
+				for (int i = 0; i < length; i++)
+				{
+					if (a1.first.first[i] != a2.first.first[i]) { return a1.first.first[i] < a2.first.first[i]; }
+				}
+				return a1.first.first.length() < a2.first.first.length();
+			}
+			return a1.second.second > a2.second.second;
+		}
+
+		return a1.second.first < a2.second.first;
+	}
+
+	return a1.first.second > a2.first.second;
+}
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int n;
+	cin >> n;
+	vector < pair<pair<string, int>, pair<int, int>>> v;
+	string name;
+	int kor, eng, math;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> name >> kor >> eng >> math;
+		v.push_back({ {name,kor},{eng, math}});
+	}
+
+	sort(v.begin(), v.end(), cmp);
+	
+	for (pair<pair<string, int>, pair<int, int>> ite : v)
+	{
+		cout << ite.first.first  << "\n";
+	}
+	return 0;
+}

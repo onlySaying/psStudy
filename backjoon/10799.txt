@@ -1,0 +1,68 @@
+1
+#include <iostream>
+2
+#include <stack>
+3
+#include <string>
+4
+using namespace std;
+5
+​
+6
+int main()
+7
+{
+8
+    stack<char> ca;
+9
+    string temp;
+10
+    cin >> temp;
+11
+    int answer = 0;
+12
+    for (int i = 0; i < temp.length(); i++)
+13
+    {
+14
+        if (temp[i] == '(')
+15
+        {
+16
+            ca.push(temp[i]);
+17
+        }
+18
+        else
+19
+        {
+20
+            if (temp[i-1] == '(')
+21
+            {
+22
+                ca.pop();
+23
+                answer += ca.size();
+24
+            }
+25
+            else
+26
+            {
+27
+                ca.pop();
+28
+                answer++;
+29
+            }
+30
+        }
+31
+    }
+32
+    cout << answer;
+33
+    return 0;
+34
+}

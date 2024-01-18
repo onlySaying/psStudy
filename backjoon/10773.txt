@@ -1,0 +1,34 @@
+#include <iostream>
+#include <stack>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	int n;
+	cin >> n;
+	stack<int> st;
+	while (n > 0)
+	{
+		n--;
+		int temp;
+		cin >> temp;
+		if (temp != 0)
+		{
+			st.push(temp);
+		}
+		else
+		{
+			st.pop();
+		}
+	}
+	int answer = 0;
+	while (!st.empty())
+	{
+		answer += st.top();
+		st.pop();
+	}
+	cout << answer;
+	return 0;
+}

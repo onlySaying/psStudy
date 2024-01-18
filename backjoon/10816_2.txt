@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int n;
+vector<int> v;
+
+int upper_idx(int t)
+{
+    int st = 0;
+    int en = n;
+    while (st < en)
+    {
+        int mid = st + en;
+        mid /= 2;
+        if (v[mid] > t)
+        {
+            en = mid;
+        }
+        else
+        {
+            st = mid + 1;
+        }
+    }
+    return st;
+}
+
+int lower_idx(int t)
+{
+    int st = 0;
+    int en = n;
+    while (st < en)
+    {
+        int mid = st + en;
+        mid /= 2;
+        if (v[mid] >= t)
+        {
+            en = mid;
+        }
+        else
+        {
+            st = mid + 1;
+        }
+    }
+    return st;
+}
+
+int main(void) 
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    cin >> n;
+    int ele;
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> ele;
+        v.push_back(ele);
+    }
+    int m;
+    cin >> m;
+    sort(v.begin(), v.end());
+    while (m--)
+    {
+        int target;
+        cin >> target;
+        int st = 0;
+        int en = n - 1;
+        int answer = 0;
+        cout << upper_idx(target) - lower_idx(target) <<" ";
+    }
+    
+    return 0;
+}
