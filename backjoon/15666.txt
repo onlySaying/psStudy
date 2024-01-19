@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <unordered_map>
+using namespace std;
+
+int m;
+int arr[10];
+bool isused[10];
+vector<int> v;
+unordered_map<int, int> um;
+vector<pair<int, int>> vp;
+
+void func(int k, int ite)
+{
+	if (k == m)
+	{
+		for (int i = 0; i < m; i++)
+		{
+			cout << arr[i] << " ";
+		}
+		cout << '\n';
+		return;
+	}
+	for (int i = ite; i < v.size(); i++)
+	{		
+		arr[k] = v[i];
+		func(k + 1, i);
+	}
+}
+
+int main() 
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int n;
+	cin >> n >> m;
+
+	int ele;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> ele;
+		um[ele]++;
+	}
+
+	for (auto ite = um.begin(); ite != um.end(); ite++)
+	{
+		v.push_back(ite->first);
+	}
+
+	sort(v.begin(), v.end());
+	
+	for (int i = 0; i < v.size(); i++)
+	{
+		vp.push_back({ v[i], um[v[i]] });
+	}
+	func(0,0);
+
+	return 0;
+}

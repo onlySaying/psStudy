@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+
+
+using namespace std;
+
+
+int main()
+{
+	vector<vector<int>> board;
+	int n, m;
+	cin >> n >> m;
+	vector<int> totalR(m);
+	vector<int> totalL(n);
+	int total = 0;
+	for (int i = 0; i < n; i++)
+	{
+		vector<int> floor;
+		
+		for (int j = 0; j < m; j++)
+		{
+			int temp;
+			cin >> temp;
+			int cnt = 0;
+			while(temp > 0)
+			{
+				int nine = temp % 10;
+				if (nine == 9) cnt++;
+				temp /= 10;
+			}
+			floor.push_back(cnt);
+			total += cnt;
+		}
+		board.push_back(floor);
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		int rowT = 0;
+		for (int j = 0; j < n; j++)
+		{
+			rowT += board[j][i];
+		}
+		totalR[i] = rowT;
+	}
+	for (int i = 0; i < n; i++)
+	{
+		int lineT = 0;
+		for (int j = 0; j < m; j++)
+		{
+			lineT += board[i][j];
+		}
+		totalL[i] = lineT;
+	}
+
+	vector<int>::iterator it = totalL.end();
+	totalL.insert(it, totalR.begin(), totalR.end());
+	sort(totalL.begin(), totalL.end());
+	int ans = total - totalL[totalL.size()-1];
+	cout << ans;
+}

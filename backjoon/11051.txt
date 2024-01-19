@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int gcd(int p, int q)
+{
+	if (q == 0) return p;
+	return gcd(q, p % q);
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int n, k;
+	cin >> n >> k;
+	vector<int> top;
+	vector<int> bot;
+
+	for (int i = 1; i <= k; i++)
+	{
+		top.push_back(n - i + 1);
+		bot.push_back(i);
+	}
+	int topnum = 1;
+	int botnum = 1;
+	vector<int> v;
+	for (int i = 0; i < top.size(); i++)
+	{
+		for(int j = 0; j < top.size(); j++)
+		{
+			if (bot[j] == 1) continue;
+			int divide = gcd(top[i], bot[j]);
+			top[i] /= divide;
+			bot[j] /= divide;
+		}
+	}
+	int answer = 1;
+	for (int i = 0; i < top.size(); i++)
+	{
+		answer *= top[i];
+		answer %= 10007;
+	}
+	cout << answer;
+	return 0;
+}

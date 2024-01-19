@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <stack>
+using namespace std;
+
+long long profit()
+{
+	long long answer = 0;
+	int n;
+	cin >> n;
+	stack<pair<int, int>> sp = stack<pair<int ,int>>();
+	int ele;
+	int idx;
+	while (n--)
+	{
+		idx = 0;
+		cin >> ele;
+		while (!sp.empty())
+		{
+			pair<int, int> cur = sp.top();
+			if (cur.first < ele)
+			{
+				answer += (ele - cur.first) * cur.second;
+				sp.pop();
+				idx += cur.second;
+			}
+			else
+			{
+				break;
+			}
+		}
+		sp.push({ ele, idx + 1 });
+	}
+
+	return answer;
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	
+	int tc;
+	cin >> tc;
+	while (tc--)
+	{
+		long long answer = profit();
+
+		cout << answer << '\n';
+	}
+
+	return 0;
+}

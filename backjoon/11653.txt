@@ -1,0 +1,31 @@
+#include<iostream>
+#include<string>
+#include<unordered_map>
+#include<vector>
+#include<tuple>
+#include<algorithm>
+
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int num;
+	cin >> num;
+	int idx = 2;
+	while (idx <= num)
+	{
+		if ( num%idx == 0)
+		{
+			num /= idx;
+			cout << idx << "\n";
+		}
+		else
+		{
+			idx++;
+		}
+	}
+}

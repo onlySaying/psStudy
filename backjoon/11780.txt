@@ -1,0 +1,92 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include<queue>
+#include<memory.h>
+using namespace std;
+
+typedef long long ll;
+const int INF = 0x3f3f3f3f;
+int city[102][102];
+int nxt[102][102];
+int n;
+int m;
+
+int main(void)
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	cin >> n >> m;
+	memset(city, INF, sizeof(city));
+	
+	for (int i = 1; i <= n; i++)
+	{
+		city[i][i] = 0;
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		int st, en, cost;
+		cin >> st >> en >> cost;
+		city[st][en] = min(city[st][en], cost);
+		nxt[st][en] = en;
+	}
+
+	for (int k = 1; k <= n; k++)
+	{
+		for (int i = 1; i <= n; i++)
+		{
+			for (int j = 1; j <= n; j++)
+			{
+				if (city[i][k] + city[k][j] < city[i][j])
+				{
+					city[i][j] = city[i][k] + city[k][j];
+					nxt[i][j] = nxt[i][k];
+				}
+			}
+		}
+	}
+
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= n; j++)
+		{
+			if(city[i][j] == INF)
+			{
+				cout << "0 ";
+				continue;
+			}
+			cout << city[i][j] << " ";
+		}
+		cout << '\n';
+	}
+
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= n; j++)
+		{
+			if (city[i][j] == 0 || city[i][j] == INF)
+			{
+				cout << "0\n";
+				continue;
+			}
+			vector<int> path;
+			int st = i;
+			while (st != j)
+			{
+				path.push_back(st);
+				st = nxt[st][j];
+			}
+			path.push_back(st);
+			cout << path.size() << ' ';
+			for (int x : path)
+			{
+				cout << x << ' ';
+			}
+			cout << '\n';
+		}
+	}
+	return 0;
+}

@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int alphabetR[26];
+int alphabetL[26];
+
+void resetArray()
+{
+	for (int i = 0; i < 26; i++)
+	{
+		alphabetL[i] = 0;
+		alphabetR[i] = 0;
+	}
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+	bool checkable = true;
+	for (int i = 0; i < n; i++)
+	{
+		resetArray();
+		checkable = true;
+		string temp;
+		cin >> temp;
+		
+		for (int j = 0; j < temp.size(); j++)
+		{
+			int arp = temp[j] - 'a';
+			alphabetR[arp]++;
+		}
+		cin >> temp;
+		for (int j = 0; j < temp.size(); j++)
+		{
+			int arp = temp[j] - 'a';
+			alphabetL[arp]++;
+		}
+
+		for (int j = 0; j < 26; j++)
+		{
+			if (alphabetL[j] != alphabetR[j])
+			{
+				cout << "Impossible" << endl;
+				checkable = false;
+				break;
+			}
+		}
+		if (checkable)
+		{
+			cout << "Possible" << endl;
+		}
+
+	}
+}

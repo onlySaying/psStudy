@@ -1,0 +1,64 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int m;
+int arr[10];
+bool isused[10];
+vector<int> v;
+
+void func(int k, int ite)
+{
+	if (k == m)
+	{
+		for (int i = 0; i < m; i++)
+		{
+			cout << arr[i] << " ";
+		}
+		cout << '\n';
+		return;
+	}
+	bool flag = true;
+	for (int i = ite; i < v.size(); i++)
+	{
+		flag = true;
+
+		if (!isused[i])
+		{
+			arr[k] = v[i];
+			if (flag)
+			{
+				flag = false;
+				func(k + 1, i);
+			}
+			else
+			{
+				func(k + 1, i + 1);
+			}
+		}
+	}
+}
+
+int main() 
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int n;
+	cin >> n >> m;
+
+	int ele;
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> ele;
+		v.push_back(ele);
+	}
+
+	sort(v.begin(), v.end());
+	
+	func(0, 0);
+
+	return 0;
+}

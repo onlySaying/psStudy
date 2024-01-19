@@ -1,0 +1,21 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int tc;
+	cin >> tc;
+
+	int a, b;
+	while (tc--)
+	{
+		cin >> a >> b;
+		cout << a + b << '\n';
+	}
+}s

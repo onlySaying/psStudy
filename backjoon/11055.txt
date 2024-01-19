@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+vector<int> total;
+vector<int> v;
+int n;
+
+int main(void) 
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    cin >> n;
+    int ele;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> ele;
+        v.push_back(ele);
+    }
+    total.push_back(v[0]);
+    for (int i = 1; i < n; i++)
+    {
+        total.push_back(v[i]);
+        for (int j = 0; j < i; j++)
+        {
+            if (v[j] < v[i] && total[i] < total[j] + v[i])
+            {
+                total[i] = total[j] + v[i];
+            }
+        }
+    }
+    sort(total.begin(), total.end());
+    cout << total[total.size() - 1];
+    return 0;
+}

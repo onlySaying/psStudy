@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <unordered_map>
+using namespace std;
+
+int main() 
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	vector<int> v;
+	int num;
+	cin >> num;
+	int ele;
+	for (int i = 0; i < num; i++)
+	{
+		cin >> ele;
+		v.push_back(ele);
+	}
+	
+	sort(v.begin(), v.end());
+	
+	long long answer = 0;
+	int total_time = 0;
+	for (int i = 0; i < num; i++)
+	{
+		total_time += v[i];
+		answer += total_time;
+	}
+	cout << answer;
+}

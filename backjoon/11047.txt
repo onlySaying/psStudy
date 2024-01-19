@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> price;
+
+int func(int k, int b)
+{
+	if (b > price.size())
+	{
+		return 0;
+	}
+
+	if (price[price.size() - b] <= k)
+	{
+		k -= price[price.size() - b];
+		if (k == 0)
+		{
+			return 1;
+		}
+		return 1 + func(k,b);
+	}
+	else
+	{
+		return func(k, b + 1);
+	}
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int n, k;
+	cin >> n >> k;	
+	int ele;
+	
+	for (int i = 0; i < n; i++)
+	{
+		cin >> ele;
+		price.push_back(ele);
+	}
+
+	int answer = func(k, 1);
+
+	cout << answer;
+	
+}

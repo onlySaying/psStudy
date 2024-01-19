@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+vector<int> num;
+vector<int> v;
+int n;
+
+int main(void) 
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    cin >> n;
+    int ele;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> ele;
+        v.push_back(ele);
+    }
+    num.push_back(1);
+    for (int i = 1; i < n; i++)
+    {
+        num.push_back(1);
+        for (int j = 0; j < i; j++)
+        {
+            if (v[j] < v[i] && num[i] < num[j]+1)
+            {
+                num[i] = num[j] + 1;
+            }
+        }
+    }
+    sort(num.begin(), num.end());
+    cout << num[num.size() - 1];
+    return 0;
+}

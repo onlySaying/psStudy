@@ -1,0 +1,89 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include<queue>
+using namespace std;
+
+typedef long long ll;
+typedef pair<int, int> pi;
+
+int dis[1002];
+int pre[1002];
+const int INF = 100000002;
+
+struct cmp {
+	bool operator()(pi a, pi b)
+	{
+		if (a.second == b.second)
+		{
+			return a.first > b.first;
+		}
+		return a.second > b.second;
+	}
+};
+
+int main(void)
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int v, e;
+	cin >> v >> e;
+	
+	vector<vector<pi>> gr(v+1);
+
+	fill(dis, dis + v + 1, INF);
+
+	for (int i = 0; i < e; i++)
+	{
+		int st, en, co;
+		cin >> st >> en >> co;
+		gr[st].push_back({ en, co });
+	}
+
+	int st, en;
+	cin >> st >> en;
+	dis[st] = 0;
+
+	priority_queue<pair<int, int>, vector<pi>, cmp> pq;
+
+	pq.push({st, dis[st]});
+
+	while (!pq.empty())
+	{
+		pi cur = pq.top();
+		pq.pop();
+
+		if (dis[cur.first] < cur.second)
+		{
+			continue;
+		}
+		for (pi a : gr[cur.first])
+		{
+			if (dis[a.first] > a.second + cur.second)
+			{
+				pre[a.first] = cur.first;
+				dis[a.first] = a.second + cur.second;
+				pq.push({ a.first, a.second + cur.second });
+			}
+		}
+	}
+
+	cout << dis[en] << '\n';
+	int now = en;
+	vector<int> path;
+	while (now != st)
+	{
+		path.push_back(now);
+		now = pre[now];
+	}
+	path.push_back(now);
+	cout << path.size() << '\n';
+	reverse(path.begin(), path.end());
+	for (int a : path)
+	{
+		cout << a << " ";
+	}
+	return 0;
+}

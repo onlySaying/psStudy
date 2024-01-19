@@ -1,0 +1,28 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int n;
+	cin >> n;
+	vector<int> v;
+
+	v.push_back(1);
+	v.push_back(2);
+
+	int a, b;
+	for (int i = 2; i < n; i++)
+	{
+		a = (v[i - 2]);
+		b = (v[i - 1]);
+		v.push_back((a + b)%10007);
+	}
+	
+	cout << v[n-1];
+}

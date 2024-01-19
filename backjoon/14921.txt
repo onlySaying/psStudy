@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <climits>
+using namespace std;
+
+int main(void)
+{
+	int n;
+	cin >> n;
+	vector<int> liq(n);
+	for (int i = 0; i < n; i++)
+	{
+		cin >> liq[i];
+	}
+
+	int st = 0;
+	int en = liq.size() - 1;
+	int MIN = INT_MAX;
+	bool pls = true;
+	while (st < en)
+	{
+		int temp = liq[en] + liq[st];
+		if (MIN > abs(temp))
+		{
+			MIN = abs(temp);
+			pls = temp > 0 ? true : false;
+		}
+		temp > 0 ? en-- : st++;
+	}
+
+	if (pls)
+	{
+		cout << MIN;
+	}
+	else
+	{
+		cout << MIN * -1;
+	}
+	return 0;
+}

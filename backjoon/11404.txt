@@ -1,0 +1,75 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include<queue>
+#include<memory.h>
+using namespace std;
+
+typedef long long ll;
+typedef pair<int, int> pi;
+const int INF = 0x3f3f3f3f;
+int city[102][102];
+int n;
+int m;
+
+void move()
+{
+	for (int k = 1; k <= n; k++)
+	{
+		for (int i = 1; i <= n; i++)
+		{
+			for (int j = 1; j <= n; j++)
+			{
+				if (i == j || i == k || j == k)
+				{
+					continue;
+				}
+				city[i][j] = min(city[i][k] + city[k][j], city[i][j]);
+			}
+		}
+	}
+}
+
+int main(void)
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	cin >> n >> m;
+	memset(city, INF, sizeof(city));
+	
+	for (int i = 1; i <= n; i++)
+	{
+		city[i][i] = 0;
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		int st, en, cost;
+		cin >> st >> en >> cost;
+		city[st][en] = min(city[st][en], cost);
+	}
+
+
+	int iterate = n;
+	
+	move();
+
+	for (int i = 1; i <= n; i++)
+	{
+		for (int j = 1; j <= n; j++)
+		{
+			if(city[i][j] == INF)
+			{
+				cout << "0 ";
+				continue;
+			}
+			cout << city[i][j] << " ";
+		}
+		cout << '\n';
+	}
+
+
+	return 0;
+}
