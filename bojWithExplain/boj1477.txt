@@ -1,0 +1,112 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <limits.h>
+using namespace std;
+/*
+* 리스트를 써서 최대 거리를 반으로 나누고 다음 최대를 찾아 나누는 방식을 처음에 생각 하였으나 최대거리를 계속 탐색해줘야하는데서
+* 효율성의 문제를 느낌
+* 그래서 아래에 설명란에서 써야하는 알고리즘을 보고 문제법 해결법을 다시 찾기로함
+* 이분 탐색으로 프로그램을 구성해야함
+* 
+* 휴게소 사이의 거리를 모두 고려해서 푸는 방식으로 푸는 거 였음 (이럴거면 처음 생각한 리스트 방식과 큰 차이 없을 것  같기도 함
+*/
+// 현재 휴게소 위치
+vector<int> v;
+
+// 현재 휴게소 갯수, 설치 가능한 휴게소 갯수, 고속도로 길이
+int n, m, l;
+
+// 입력을 받는 함수.
+void input();
+// vector를 채우는 함수
+void inputV();
+//vector 정렬
+void sortV();
+
+int binarySearch();
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	
+	input();
+	inputV();
+	sortV();
+	int ans = binarySearch();
+	cout << ans;
+}
+
+void input()
+{
+	cin >> n >> m >> l;
+}
+
+void inputV()
+{
+	for (int i = 0; i < n; i++)
+	{
+		int temp;
+		cin >> temp;
+		v.push_back(temp);
+	}
+
+	//https://www.acmicpc.net/board/view/91413
+	// 17%에서 틀렸는데 알아보니 시작에서 처음 휴게소까지 거리는 저장하지만 마지막 휴게소에서 끝까지의 거리는 계산하지 못하는 문제가 있었음
+	v.push_back(l);
+}
+
+void sortV()
+{
+	sort(v.begin(), v.end());
+}
+
+int binarySearch()
+{
+	int answer = 0;
+
+	// 고속도로 시작점에는 휴게소를 건설하지 못한다.
+	int st = 1;
+	// 고속도로 끝에도 휴게소를 건설하지 못한다.
+	int en = l - 1;
+
+	// 이분 탐색틀 만들기
+	int mid = (st + en + 1) / 2;
+
+	// 추가 건설 개수
+	int cnt = 0;
+
+	while (st <= en)
+	{
+		//cout << "st : " << st << " en : " << en << endl;
+		mid = (st + en + 1) / 2;
+		cnt = 0;
+
+		for (int i = 0; i < v.size(); i++)
+		{
+			int dist = v[i];
+			if (i != 0) dist -= v[i - 1];
+
+			cnt += dist / mid;
+
+			// 오차가 발생해서 찾아보니 v[i]내에서 설치가 가능하기에 v[i]에 설치가 될 경우 건설 개수에서 빼주어야함
+			if (dist % mid == 0)
+			{
+				cnt--;
+			}
+			
+		}
+		if (cnt > m)
+		{
+			st = mid + 1;
+		}
+		if (cnt <= m)
+		{
+			en = mid - 1;
+			answer = mid;
+		}
+	}
+	return answer;
+}
