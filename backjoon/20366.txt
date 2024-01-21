@@ -1,0 +1,81 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <limits.h> 
+#include <map>
+#include <tuple>
+
+using namespace std;
+
+bool cmp(tuple<int, int, int> a, tuple<int, int, int> b)
+{
+	if (get<0>(a) == get<0>(b))
+	{
+		if (get<1>(a) == get<1>(b))
+		{
+			return get<2>(a) < get<2>(b);
+		}
+		return get<1>(a) < get<1>(b);
+	}
+	return get<0>(a) < get<0>(b);
+}
+
+int main(void)
+{
+	cin.tie(0);
+	ios::sync_with_stdio(0);
+	int n;
+
+	cin >> n ;
+
+	vector <tuple<int, int, int>> snowman;
+	int ele;
+	vector<int> ball(n);
+	for (int i = 0; i < n; i++)
+	{
+		cin >> ball[i];
+	}
+
+	sort(ball.begin(), ball.end());
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = i+1; j < n; j++)
+		{
+			snowman.push_back({ ball[i] + ball[j], i, j });
+		}
+	}
+
+	
+
+	sort(snowman.begin(), snowman.end(), cmp);
+	int small = INT_MAX;
+
+	map<int,int> maps;
+	
+	int st = 0;
+	int en = st + 1;
+
+	while (st < snowman.size()-1)
+	{
+		if (get<1>(snowman[st]) == get<1>(snowman[st+1]) || get<1>(snowman[st]) == get<2>(snowman[st+1]))
+		{
+			st++;
+			continue;
+		}
+		else if (get<2>(snowman[st]) == get<1>(snowman[st+1]) || get<2>(snowman[st]) == get<2>(snowman[st+1]))
+		{
+			st++;
+			continue;
+		}
+		
+		int temp = abs(get<0>(snowman[st + 1]) - get<0>(snowman[st]));
+
+		small = min(small, temp);
+		st++;
+	}
+	
+	cout << small;
+	return 0;
+}

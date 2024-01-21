@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+typedef long long ll;
+int n, k;
+vector<int> v;
+// 85
+bool solve(ll x)
+{
+	ll cur = 0;
+	for (int i = 0; i < k; i++)
+	{
+		cur += v[i] / x;
+	}
+	return cur >= n;
+}
+
+int main(void)
+{
+	cin.tie(0);
+	ios::sync_with_stdio(0);
+	cin >> n >> k;
+	int ele;
+	for (int i = 0; i < k; i++)
+	{
+		cin >> ele;
+		v.push_back(ele);
+	}
+	ll st = 0;
+	ll en = 0x7fffffff;
+	sort(v.begin(), v.end());
+	while (st < en)
+	{
+		ll mid = (st + en + 1) / 2;
+		if (solve(mid))
+		{
+			st = mid;
+		}
+		else { en = mid - 1; }
+	}
+
+	cout << st;
+	return 0;
+}

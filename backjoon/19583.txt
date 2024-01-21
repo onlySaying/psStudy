@@ -1,0 +1,77 @@
+#include<iostream>
+#include<string>
+#include<unordered_map>
+#include<vector>
+#include<tuple>
+#include<algorithm>
+
+using namespace std;
+
+int makeMin(string time)
+{
+	int i = 0;
+	int hour = 0;
+	for ( ; i < time.length(); i++)
+	{
+		if (time[i] == ':')
+		{
+			i++;
+			break;
+		}
+		hour *= 10;
+		hour += time[i] - '0';
+	}
+	int min = 0;
+	for (; i < time.length(); i++)
+	{
+		min *= 10;
+		min += time[i] - '0';
+	}
+	min += hour * 60;
+	return min;
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	string start, end, streamingEnd;
+	cin >> start >> end >> streamingEnd;
+	
+	int startM, endM, streamingM;
+	startM = makeMin(start);
+	endM = makeMin(end);
+	streamingM = makeMin(streamingEnd);
+	string time;
+	string name;
+
+	unordered_map<string, bool> um;
+	int tM;
+	while (!cin.eof())
+	{
+		cin >> time >> name;
+		tM = makeMin(time);
+		if (tM <= startM)
+		{
+			um.insert({ name, false });
+		}
+		else if (endM <= tM && tM <= streamingM)
+		{
+			if(um.find(name) != um.end())
+			{
+				um[name] = true;
+			}
+		}
+	}
+	int answer = 0;
+	for (auto ite = um.begin(); ite != um.end(); ite++)
+	{
+		if (ite->second)
+		{
+			answer++;
+		}
+	}
+	cout << answer;
+}

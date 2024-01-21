@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include<queue>
+using namespace std;
+
+typedef long long ll;
+
+int main(void)
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int n, m;
+	cin >> n >> m;
+	
+	priority_queue< ll , vector<ll>, greater<ll>> pq;
+
+	int ele;
+	
+	for (int i = 0; i < n; i++)
+	{
+		cin >> ele;
+		pq.push(ele);
+	}
+
+	while (m--)
+	{
+		ll cur = pq.top();
+		pq.pop();
+		cur += pq.top();
+		pq.pop();
+		pq.push(cur);
+		pq.push(cur);
+	}
+
+	long long answer = 0;
+
+	while (!pq.empty())
+	{
+		answer += pq.top();
+		pq.pop();
+	}
+
+	cout << answer;
+	return 0;
+}

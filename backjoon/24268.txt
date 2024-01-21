@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <limits.h>
+#include <cmath>
+using namespace std;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int year;
+	cin >> year;
+	int nary;
+	cin >> nary;
+	vector<int> v;
+
+	for (int i = 0; i < nary; i++)
+	{
+		v.push_back(i);
+	}
+	int ans = INT_MAX;
+	do
+	{
+		int temp = 0;
+		
+		if (v[v.size() - 1] == 0) { continue; }
+		for (int i = 0; i < v.size(); i++)
+		{
+			temp += pow(nary, i) * v[i];
+		}
+		if (temp > year)
+		{
+			ans = min(ans, temp);
+		}
+	} while (next_permutation(v.begin(),v.end()));
+	if (ans == INT_MAX)
+	{
+		cout << -1;
+		return 0;
+	}
+	cout << ans;
+	return 0;
+}

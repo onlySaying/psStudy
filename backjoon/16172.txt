@@ -1,0 +1,33 @@
+#include <iostream>
+#include <cstring>
+#include <string>
+using namespace std;
+
+int main(void)
+{
+	char* words;
+	char* word;
+	string temp1;
+	string temp2;
+	cin >> temp1 >> temp2;
+	string tempW = "";
+	for (int i = 0; i < temp1.size(); i++)
+	{
+		if (isdigit(temp1[i]))
+		{
+			continue;
+		}
+		tempW += temp1[i];
+	}
+
+	words = &tempW[0];
+	word = &temp2[0];
+	char* ptr = strstr(words, word);
+	int answer = 0;
+	if (ptr != NULL)
+	{
+		answer++;
+	}
+	cout << answer;
+	return 0;
+}

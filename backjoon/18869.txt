@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+int n, m;
+vector<vector<int>> v1;
+vector<vector<int>> v2;
+vector<string> order;
+
+int main(void)
+{
+	cin.tie(0);
+	ios::sync_with_stdio(0);
+	cin >> n >> m;
+	
+	for (int i = 0; i < n; i++)
+	{
+		vector<int> v1L;
+		vector<int> v2L;
+		for (int j = 0; j < m; j++)
+		{
+			int ele;
+			cin >> ele;
+			v1L.push_back(ele);
+			v2L.push_back(ele);
+		}
+		v1.push_back(v1L);
+		v2.push_back(v2L);
+	}
+	for (int i = 0; i < n; i++)
+	{
+		sort(v1[i].begin(), v1[i].end());
+	}
+	for (int i = 0; i < v1.size(); i++)
+	{
+		string temp = "";
+		for (int j = 0; j < v1[i].size(); j++)
+		{
+			int t = lower_bound(v1[i].begin(), v1[i].end(), v2[i][j]) - v1[i].begin();
+			temp += to_string(t);
+		}
+		order.push_back(temp);
+	}
+	int answer = 0;
+	for (int i = 0; i < order.size(); i++)
+	{
+		for (int j = i + 1; j < order.size(); j++)
+		{
+			if (order[i] == order[j])
+			{
+				answer++;
+			}
+		}
+	}
+	cout << answer;
+	return 0;
+}

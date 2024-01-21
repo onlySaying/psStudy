@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <map>
+using namespace std;
+
+
+int main(void)
+{
+	cin.tie(0);
+	ios::sync_with_stdio(0);
+	int n, k;
+
+	cin >> n >> k ;
+
+	int st = 0;
+	int en = 0;
+	map<int, int> maps;
+	vector<int> v;
+	int ele;
+	int m = 0;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> ele;
+		maps[ele]++;
+		v.push_back(ele);
+		if (maps[ele] > k)
+		{
+			m = max(m, i - st);
+			maps[ele]--;
+			for (int j = st; j < i; j++)
+			{
+				if (v[j] == ele)
+				{
+					st = j+1;
+					break;
+				}
+			}
+		}
+	}
+	m = max(m, n - st);
+	cout << m;
+	return 0;
+}

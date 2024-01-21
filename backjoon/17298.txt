@@ -1,0 +1,55 @@
+#include <iostream>
+#include <stack>
+#include <vector>
+using namespace std;
+
+
+int main()
+{
+	cin.tie(0);
+	ios_base::sync_with_stdio(false);
+	int n;
+	cin >> n;
+	stack<int> s;
+	int temp;
+	vector<int> v;
+	stack<int> answer;
+	while (n > 0)
+	{
+		n--;
+		cin >> temp;
+		v.push_back(temp);
+	}
+	for (int i = v.size() - 1; i >= 0; i--)
+	{;
+		if (!s.empty())
+		{
+			if (s.top() > v[i])
+			{
+				answer.push(s.top());
+			}
+			else if (s.top() <= v[i])
+			{
+				while (!s.empty())
+				{
+					if (s.top() > v[i])
+					{
+						answer.push(s.top());
+						break;
+					}
+					s.pop();
+				}
+			}
+		}
+		if (s.empty())
+		{
+			answer.push(-1);
+		}
+		s.push(v[i]);
+	}
+	while (!answer.empty())
+	{
+		cout << answer.top() << " ";
+		answer.pop();
+	}
+}

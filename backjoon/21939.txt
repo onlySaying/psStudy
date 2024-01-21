@@ -1,0 +1,62 @@
+#include<iostream>
+#include<vector>
+#include <set>
+#include<algorithm>
+#include <map>
+using namespace std;
+
+int main(void)
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int n;
+	cin >> n ;
+	set<pair<int,int>> problem;
+	map<int, int> m;
+	for (int i = 0; i < n; i++)
+	{
+		int num, diff;
+		cin >> num >> diff;
+		problem.insert({ diff, num });
+		m.insert({ num, diff });
+		
+	}
+	
+	int tc;
+	cin >> tc;
+	while (tc--)
+	{
+		string temp;
+		cin >> temp;
+		if (temp == "add")
+		{
+			int num, diff;
+			cin >> num >> diff;
+			problem.insert({ diff, num });
+			m.insert({ num, diff });
+		}
+		else if (temp == "recommend")
+		{
+			int num;
+			cin >> num;
+			if (num == 1)
+			{
+				cout << (*prev(problem.end())).second << '\n';
+			}
+			else
+			{
+				cout << (*problem.begin()).second << '\n';
+			}
+		}
+		else if (temp == "solved")
+		{
+			int num;
+			cin >> num;
+			problem.erase({ m[num],num });
+		}
+	}
+
+	return 0;
+}

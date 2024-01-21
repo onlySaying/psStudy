@@ -1,0 +1,70 @@
+#include<iostream>
+#include<string>
+#include<unordered_map>
+#include<vector>
+#include<tuple>
+#include<algorithm>
+
+using namespace std;
+
+bool cmp(string a, string b)
+{
+	int length = a.length();
+	if (a.length() > b.length()) { length = b.length(); }
+
+	for (int i = 0; i < length; i++)
+	{
+		if (a[i] != b[i])
+		{
+			return a < b;
+		}
+	}
+	return a.length() < b.length();
+}
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	int n, m;
+	cin >> n >> m;
+	unordered_map<string, vector<string>> group;
+	unordered_map<string, string> member;
+	while (n--)
+	{
+		string gn, mn;
+		int gs;
+		cin >> gn;
+		cin >> gs;
+		vector<string> girlgroup;
+		for (int i = 0; i < gs; i++)
+		{
+			cin >> mn;
+			girlgroup.push_back(mn);
+			member.insert({ mn, gn });
+		}
+		sort(girlgroup.begin(), girlgroup.end(), cmp);
+		group.insert({gn, girlgroup});
+	}
+
+	while (m--)
+	{
+		string cm;
+		cin >> cm;
+		int find;
+		cin >> find;
+		if (find == 0)
+		{
+			vector<string> v = group[cm];
+			for (int i = 0; i < v.size(); i++)
+			{
+				cout << v[i] << '\n';
+			}
+		}
+		else
+		{
+			cout << member[cm] << "\n";
+		}
+	}
+	
+}

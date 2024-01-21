@@ -1,0 +1,118 @@
+#include<iostream>
+#include<vector>
+#include<queue>
+#include<math.h>
+
+using namespace std;
+
+#define X first;
+#define Y second;
+
+int n, m;
+
+int mx[] = {1, 0, -1, 0};
+int my[] = {0, 1, 0, -1}; //북, 남, 동, 서
+
+vector<vector<int>> boardO; // 처음 입력 받은 값 저장
+vector<vector<int>> boardL; // 크기 판단할 복사 배열 저장 위치 
+
+vector<pair<int, int>> cctv;
+
+bool OOB(int a, int b) // 배열 범위 확인 out of bounds 오류 해결
+{
+	return a < 0 || a >= n || b < 0 || b >= m;
+	// 범위과 포함되면 false 반환
+}
+
+//dir 방향으로 진행하면서 벽이나 끝으로 진행하면서 빈칸 (0)을 7로 변경
+void func(int x, int y, int dir)
+{
+	dir %= 4;
+	while (1)
+	{
+		x += mx[dir];
+		y += my[dir];
+		if (OOB(x, y) || boardL[x][y] == 6) { return; }
+		if (boardL[x][y] != 0) { continue; }
+		boardL[x][y] = 7;
+	}
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	cin >> n >> m;
+
+	int ele;
+	int answer = 0;
+
+	for (int i = 0; i < n; i++)
+	{
+		vector<int> line;
+		for (int j = 0; j < m; j++)
+		{
+			cin >> ele;
+			line.push_back(ele);
+			if (ele != 0 && ele != 6) { cctv.push_back({ i,j }); }
+			if (ele == 0) { answer++; }
+		}
+		boardO.push_back(line);
+	}
+
+	// 1 << (2 * cctv.size())는 cctv 갯수의 4승임 1 << 1은 1의 bit를 오른쪽으로 1개 이동하는 함수 2배 증가
+	for (int temp = 0; temp < (1 << (2 * cctv.size())); temp++)
+	{
+		boardL = boardO;
+		int brute = temp;
+		for (int i = 0; i < cctv.size(); i++)
+		{
+			int dir = brute % 4;
+			brute /= 4;
+			int x = cctv[i].X;
+			int y = cctv[i].Y;
+			if (boardO[x][y] == 1)
+			{
+				func(x, y, dir);
+			}
+			else if (boardO[x][y] == 2)
+			{
+				func(x, y, dir);
+				func(x, y, dir + 2);
+			}
+			else if (boardO[x][y] == 3)
+			{
+				func(x, y, dir);
+				func(x, y, dir + 1);
+			}
+			else if (boardO[x][y] == 4)
+			{
+				func(x, y, dir);
+				func(x, y, dir + 1);
+				func(x, y, dir + 2);
+			}
+			else if (boardO[x][y] == 5)
+			{
+				func(x, y, dir);
+				func(x, y, dir + 1);
+				func(x, y, dir + 2);
+				func(x, y, dir + 3);
+			}
+		}
+		int val = 0;
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				val += (boardL[i][j] == 0);
+			}
+		}
+		answer = min(answer, val);
+
+	}
+	
+	cout << answer;
+	return 0;
+}
