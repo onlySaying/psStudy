@@ -1,0 +1,88 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <limits.h>
+#include <stack>
+using namespace std;
+
+/*
+*  1662 압축
+*  생긴게 스택써서 쓰면 될꺼같다.
+*/
+
+string input(string a)
+{
+	cin >> a;
+	return a;
+}
+
+int solve(string zip);
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	//입력받을 압축 파일
+	string zip;
+	zip = input(zip);
+
+	// 답 구하기
+	int ans = solve(zip);
+	cout << ans;
+}
+
+int solve(string zip)
+{
+	// return 할 값
+	int ans = 0;
+
+	//사용할 스택(char stack을 쓸 이유가 없었다.) () 숫자만 들어오기에 음수가 못들어온다.-> ( 는 음수로 처리하고 )일 때 계산한다.
+	stack<int> st;
+	
+	for (int i = 0; i < zip.length(); i++)
+	{
+		// )가 나와야 계산할 수 있으므로 -1을 푸시한다.
+		if (zip[i] == '(')
+		{
+			st.push(-1);
+		}
+		// 숫자 일때
+		if (isdigit(zip[i]))
+		{
+			if (i+1 < zip.length() && zip[i+1] == '(')
+			{
+				st.push(zip[i]-'0');
+				continue;
+			}
+			//cnt로 계산했는데 cnt로 계산할 경우 (에서 꼬이는 경우가 너무 많았다.
+			st.push(1);
+		}
+		if (zip[i] == ')')
+		{
+			// 계산해 줄 값
+			int calc = 0;
+			while (st.top() != -1)
+			{
+				// -1('(')이 나올 때 까지 push 한다.
+				calc += st.top();
+				st.pop();
+			} // st.pop()을 반복문 안에 넣고 싶다.
+			// '(' 이 나왔으므로 먼저 제거한다.
+			st.pop();
+
+			// 값을 곱한다. -1 stack에 미리 상수를 집어 넣었다.
+			calc *= st.top();
+			st.pop();
+			st.push(calc);
+		}
+	}
+	while (!st.empty()) {
+		//괄호 밖의 숫자들 이나 여러 괄호들로 나뉘어 져 있을 경우가 있으므로 이를 계싼 해준다.
+		ans += st.top();
+		st.pop();
+	}
+	
+	return ans;
+}
