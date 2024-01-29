@@ -1,0 +1,93 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+vector<int> times;
+vector<vector<int>> dir;
+vector<int> dp;
+vector<int> cnt;
+int n, k;
+int w;
+queue<int> q;
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int tc;
+	cin >> tc;
+	while (tc--)
+	{
+		cin >> n >> k;
+		
+		times.clear();
+		dir.clear();
+		dp.clear();
+		cnt.clear();
+//0 이상의 정수로 계산해야 편함
+		cnt.push_back(0);
+		times.push_back(0);
+		dp.push_back(0);
+
+		for (int i = 1; i <= n; i++)
+		{
+			int temp;
+			cin >> temp;
+			times.push_back(temp);
+			dp.push_back(0);
+			cnt.push_back(0);
+		}
+// 그래프 채우기
+		for (int i = 0; i <= n; i++)
+		{
+			vector<int> v;
+			dir.push_back(v);
+		}
+		for (int i = 0; i < k; i++)
+		{
+			int x, y;
+			cin >> x >> y;
+			dir[x].push_back(y);
+			cnt[y]++;
+		}
+		
+		cin >> w;
+// q에 떨어진 노드나 첫 노드 넣기
+		for (int i = 1; i <= n; i++)
+		{
+			if (cnt[i] == 0)
+			{
+				dp[i] = times[i];
+				q.push(i);
+			}
+		}
+
+// 앞에서 부터 계산
+		for (int i = 0; i < n; i++)
+		{
+			int v = q.front();
+			q.pop();
+			for (int j = 0; j < dir[v].size(); j++)
+			{
+				int nxt = dir[v][j];
+//앞에서 만들어야 할 것들 다 만들어지면 q에 삽입
+				cnt[nxt]--;
+				dp[nxt] = max(dp[nxt], dp[v] +times[nxt]);
+				if (cnt[nxt] == 0)
+				{
+					q.push(nxt);
+				}
+			}
+		}
+		while (!q.empty())
+		{
+			q.pop();
+		}
+		cout << dp[w] << '\n';
+	}
+	
+	
+}
