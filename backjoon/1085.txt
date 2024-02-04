@@ -1,0 +1,21 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<math.h>
+using namespace std;
+
+
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	int x, y, w, h;
+	cin >> x >> y >> w >> h;
+	
+	x = min(x, abs(w - x));
+	y = min(y, abs(h - y));
+	cout << min(x, y);
+}
