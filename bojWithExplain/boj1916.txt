@@ -1,0 +1,106 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<limits.h>
+#include<queue>
+#include<memory.h>
+using namespace std;
+typedef pair<int, int> pi;
+
+
+//1916
+//최소비용 구하기
+
+//amount of city
+int n;
+//amount of bus
+int m;
+
+//bus adj
+vector<vector<pi>> adj;
+
+//start city
+int st;
+
+//end city
+int en;
+
+int cost[1002][1002];
+int totalCost[1002];
+bool visit[1002];
+
+// priority que 정렬
+struct cmp
+{
+	bool operator()(pi a, pi b)
+	{
+		return a.second > b.second;
+	}
+};
+
+// input contexts
+void inputs()
+{
+	memset(cost, -1, sizeof(cost));
+	cin >> n;
+	cin >> m;
+	adj = vector<vector<pi>>(n+1);
+	for (int i = 0; i < m; i++)
+	{
+		int a, b , c;
+		cin >> a >> b >> c;
+		adj[a].push_back({b,c});
+		if (cost[a][b] == -1 || cost[a][b] > c)
+		{
+			cost[a][b] = c;
+		}
+	}
+
+	cin >> st >> en;
+}
+
+// solve the problem
+void solution()
+{
+	priority_queue<pi, vector<pi>, cmp> pq;
+	pq.push({ st,0 });
+	while (!pq.empty())
+	{
+		pi cur = pq.top();
+		if (cur.first == en)
+		{
+			break;
+		}
+		pq.pop();
+		//cout << "cur :: cur.first : " << cur.first << ", cur.second : " << cur.second << endl<<endl;
+		//cout << adj[cur.first].size() << endl;
+		for(int i = 0; i < adj[cur.first].size(); i++)
+		{
+			//cout << "cur.second : " << cur.second <<
+				//" cost[cur.first][adj[cur.first][i].first] : " << cost[cur.first][adj[cur.first][i].first] << endl;
+
+			if (totalCost[adj[cur.first][i].first] > cur.second + cost[cur.first][adj[cur.first][i].first]
+				|| !visit[adj[cur.first][i].first])
+			{
+				//cout << "cur.second : " << cur.second << 
+					//" cost[cur.first][adj[cur.first][i].first] : " << cost[cur.first][adj[cur.first][i].first] << endl;
+				//cout << "dd" << endl;
+				visit[adj[cur.first][i].first] = true;
+				totalCost[adj[cur.first][i].first] = cur.second + cost[cur.first][adj[cur.first][i].first];
+				pq.push({ adj[cur.first][i].first, cur.second + cost[cur.first][adj[cur.first][i].first] });
+			}
+			
+		}
+		
+	}
+	cout << pq.top().second;
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	inputs();
+	solution();
+}

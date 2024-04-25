@@ -1,0 +1,62 @@
+#include<iostream>
+#include<vector>
+#include<memory.h>
+#include<limits.h>
+#include<stack>
+using namespace std;
+const int INF = INT_MAX;
+//14719
+
+// 높이
+int h;
+// 너비
+int w;
+
+// 높이 저장
+vector<int> v;
+
+void input()
+{
+    cin >> h >> w;
+}
+
+void solution()
+{
+    int total = 0;
+    v = vector<int>(w);
+
+    for (int i = 0; i < w; i++)
+    {
+        cin >> v[i];
+    }
+
+    int cur = 0;
+    // 현재 위치에서 내 왼쪽과 내 오른쪽에서 가장 큰 수중 작은 수에 자기 높이를 뺏을때 상수일 경우 total 값에 추가되어야한다. 
+    for (int i = 1; i < w-1; i++)
+    {
+        int left = 0; 
+        int right = 0;
+        for (int j = 0; j < i; j++)
+        {
+            left = max(left, v[j]);
+        }
+        for (int j = w-1; j > i; j--)
+        {
+            right = max(right, v[j]);
+        }
+        if (min(left, right) - v[i] > 0)
+        {
+            total += min(left, right) - v[i];
+        }
+        
+    }
+    cout << total;
+}
+
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    input();
+    solution();
+}
