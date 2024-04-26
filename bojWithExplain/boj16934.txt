@@ -1,0 +1,60 @@
+#include<iostream>
+#include<vector>
+#include<memory.h>
+#include<limits.h>
+#include<unordered_map>
+#include<unordered_set>
+using namespace std;
+const int INF = INT_MAX;
+void solution();
+//16934
+
+int n;
+
+unordered_map <string, bool> map;
+unordered_map <string,int> endN;
+
+string name;
+
+void input()
+{
+    cin >> n;
+    while (n--)
+    {
+        cin >> name;
+        solution();
+    }
+}
+
+void solution()
+{
+    bool pass = true;
+    for (int i = 0; i < name.size(); )
+    {
+        string temp = name.substr(0, ++i);
+        if (!map[temp])
+        {
+            map[temp] = true;
+            if (pass)
+            {
+                cout << temp<<'\n';
+                pass = false;
+            }
+        }
+    }
+    endN[name]++;
+    if (pass)
+    {
+        if (endN[name] == 1)
+            cout << name << '\n';
+        else
+            cout << name << endN[name] << '\n';
+    }
+}
+
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    input();
+}
