@@ -1,0 +1,75 @@
+#include<iostream>
+#include<vector>
+#include<memory.h>
+#include<limits.h>
+#include<unordered_map>
+#include<unordered_set>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+
+typedef long long ll;
+typedef pair<ll, ll> pi;
+const ll LLNF = LLONG_MAX;
+void solution();
+//2473
+
+int n;
+vector<ll> v;
+vector<ll> ans(3);
+void input()
+{
+    cin >> n;
+    v = vector<ll>(n);
+    for(int i = 0; i <n; i++)
+    {
+        cin >> v[i];
+    }
+}
+
+void solution()
+{
+    ll min = LLONG_MAX;
+
+    sort(v.begin(), v.end());
+
+    for (int i = 0; i < v.size(); i++)
+    {
+        int st = i+1;
+        int en = v.size() - 1;
+
+        while (st < en)
+        {
+            ll mixed = v[i] + v[st] + v[en];
+            if (min > abs(mixed))
+            {
+                min = abs(mixed);
+                ans[0] = v[i];
+                ans[1] = v[st];
+                ans[2] = v[en];
+            }
+            if (mixed < 0)
+            {
+                st++;
+            }
+            else
+            {
+                en--;
+            }
+        }
+    }
+    
+    sort(ans.begin(), ans.end());
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
+}
+
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    input();
+    solution();
+}
