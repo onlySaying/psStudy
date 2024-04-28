@@ -1,0 +1,56 @@
+#include<iostream>
+#include<vector>
+#include<iostream>
+#include<vector>
+#include<queue>
+#include<algorithm>
+#include <stack>
+#include <memory.h>
+
+using namespace std;
+// 9252
+int dp[1001][1001];
+
+int main(void)
+{
+	cin.tie(0);
+	ios::sync_with_stdio(0);
+
+	string f, s;
+	string lcs;
+	cin >> f >> s;
+
+	memset(dp, 0, sizeof(dp));
+	for (int i = 1; i <= f.size(); i++)
+	{
+		for (int j = 1; j <= s.size(); j++)
+		{
+
+			if (f[i - 1] == s[j - 1])
+			{
+				dp[i][j] = dp[i - 1][j - 1] + 1;
+			}
+			else
+			{
+				dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+			}
+		}
+	}
+	cout << dp[f.length()][s.length()] << '\n';
+
+	int f_idx = s.size();
+	for (int i = f.size(); i >= 0; i--) {
+		for (int j = f_idx; j >= 1; j--) {
+			if (dp[i][j] == dp[i - 1][j]) {
+				f_idx = j;
+				break;
+			}
+			else if (dp[i][j] == dp[i][j - 1]) continue;
+			else {
+				lcs = f[i - 1] + lcs;
+			}
+		}
+	}
+	cout << lcs;
+	return 0;
+}
