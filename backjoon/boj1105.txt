@@ -1,0 +1,40 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<limits.h>
+#include<math.h>
+
+using namespace std;
+
+// 1105
+// 입력 값의 수
+int n;
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	int l, r;
+	cin >> l >> r;
+	int cnt = 0;
+	while (l > 0)
+	{
+		if (l % 10 == r % 10 && l % 10 == 8)
+		{
+			if (abs(l - r) < 10)
+			{
+				cnt++;
+			}
+		}
+		l /= 10;
+		r /= 10;
+	}
+	if (r > 0)
+	{
+		cnt = 0;
+	}
+
+	cout << cnt;
+
+}
