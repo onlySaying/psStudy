@@ -1,0 +1,76 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<limits.h>
+#include<math.h>
+
+using namespace std;
+
+// 18429
+// 입력 값의 수
+
+int n;
+//매일 떨어지는 값
+int k; 
+
+vector<int> v;
+
+int visit[10];
+int ans;
+
+void input()
+{
+	cin >> n >> k;
+	v = vector<int>(n);
+	for(int i = 0; i < n; i++)
+	{
+		cin >> v[i];
+	}
+}
+
+void func(int h, int ite)
+{
+	if (ite == n)
+	{
+		//cout << "ans++" << endl;
+		ans++;
+		return;
+	}
+	for (int i = 0; i < n; i++)
+	{
+		int temp = h;
+		if (!visit[i])
+		{
+			temp -= k;
+			temp += v[i];
+			//cout << "temp : " << temp;
+			//cout << ", k : " << k << ", v[i] : " << v[i] <<endl;
+			if (temp >= 500)
+			{
+				//cout << "i : " << i;
+				//cout << ", heavy : " << h << ", ite : " << ite << endl;
+				visit[i] = true;
+				func(temp, ite+1);
+				visit[i] = false;
+			}
+
+		}
+	}
+}
+
+void solution()
+{
+	sort(v.begin(), v.end());
+	func(500, 0);
+	cout << ans;
+}
+
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	input();
+	solution();
+}
