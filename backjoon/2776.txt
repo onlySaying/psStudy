@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <map>
+using namespace std;
+//2776
+void solve(int temp);
+
+int tc;
+int n;
+vector<int> vec;
+
+void input()
+{
+    int tc;
+    cin >> tc;
+    
+    while (tc--)
+    {
+        cin >> n;
+        vec = vector<int>(n);
+        for (int i = 0; i < n; i++)
+        {
+            cin >> vec[i];
+        }
+        sort(vec.begin(), vec.end());
+        cin >> n;
+        
+        for (int i = 0; i < n; i++) {
+            int temp;
+            cin >> temp;
+            solve(temp);
+        }
+    }
+}
+
+void solve(int num)
+{
+    if (binary_search(vec.begin(), vec.end(), num))
+        cout << "1\n";
+    else
+        cout << "0\n";
+}
+
+
+
+int main()
+{
+
+    ios::sync_with_stdio;
+    cin.tie(0);
+    cout.tie(0);
+
+    input();
+    
+
+}

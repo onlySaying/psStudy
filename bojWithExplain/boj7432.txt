@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <map>
+using namespace std;
+//7432
+struct node
+{
+    map<string, node*> m; // 맵에 맵을 이어서 트리의 구조를 보이게 된다.
+};
+node* head;
+
+int n;
+void input()
+{
+    cin >> n;
+    head = new node();
+    while (n--)
+    {
+        string line;
+        cin >> line;
+        int cur = 0;
+        node* curN = head;
+        // 초기화 
+        for (int i = 0; i < line.size(); i++)
+        {
+            // \이거나 입력된 라인이 끝날 때 마다 노드에 추가
+            if (line[i] == '\\')
+            {
+                // 글자 자르기
+                string temp = line.substr(cur, i-cur);
+                cur = i + 1;
+                // node에서 찾기 시작 노드가 같은게 있으면 찾아서 다음 노드로 없으면 새노드 생성
+                if (curN->m.find(temp) == curN->m.end())
+                {
+                    curN->m[temp] = new node;
+                }
+                curN = curN->m[temp];
+            }
+            if (i == line.size() - 1)
+            {
+                //위와 같음
+                string temp = line.substr(cur, i - cur+1);
+                cur = i + 1;
+                if (curN->m.find(temp) == curN->m.end())
+                {
+                    curN->m[temp] = new node;
+                }
+                curN = curN->m[temp];
+            }
+        }
+    }
+}
+void DFS(node* cur, string depth)
+{
+    // head를 순회하면서 출력
+    for (auto s : cur->m)
+    {
+        cout << depth + s.first << '\n';
+        DFS(s.second, depth + ' ');
+    }
+}
+int main()
+{
+    ios::sync_with_stdio;
+    cin.tie(0);
+    cout.tie(0);
+
+    input();
+    DFS(head, "");
+
+}

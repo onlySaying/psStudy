@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <map>
+using namespace std;
+//20551
+
+
+vector<int> vec(3);
+
+void solution(int i)
+{
+    cout << "#" << i << " ";
+    int total = 0;
+    for (int i = 2; i > 0; i--)
+    {
+        while (vec[i] <= vec[i - 1])
+        {
+            total++;
+            vec[i - 1]--;
+            if (vec[i - 1] == 0)
+            {
+                cout << -1 << '\n';
+                return;
+            }
+        }
+        
+    }
+    cout << total << '\n';
+}
+void input()
+{
+    int tc;
+    cin >> tc;
+    
+    for (int i = 1; i <= tc; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            cin >> vec[j];
+        }
+        solution(i);
+    }
+}
+
+
+
+int main()
+{
+
+    ios::sync_with_stdio;
+    cin.tie(0);
+    cout.tie(0);
+
+    input();
+    
+
+}
